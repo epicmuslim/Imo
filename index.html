@@ -73,14 +73,17 @@
   .nav-cta:hover { background: #3a3530 !important; transform: translateY(-1px); }
 
   /* ── PAGE SLIDER ── */
+  html, body { overflow-x: hidden; max-width: 100%; }
   body { overflow-x: hidden; }
+  .slider-wrapper { width: 100vw; overflow: hidden; position: relative; }
   .pages-slider {
     display: flex;
     align-items: flex-start;
     transition: transform 0.58s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+    width: 300vw;
   }
-  .page { min-width: 100vw; width: 100vw; flex-shrink: 0; }
+  .page { min-width: 100vw; width: 100vw; flex-shrink: 0; overflow-x: hidden; }
 
   /* ── SCROLL REVEAL ── */
   .reveal {
@@ -693,6 +696,20 @@
     .bottom-row { grid-template-columns: 1fr; }
     footer { grid-template-columns: 1fr; text-align: center; gap: 16px; }
     .footer-links { justify-content: center; }
+    /* études mobile */
+    .etudes-case { padding: 60px 20px; }
+    .etudes-case-grid { grid-template-columns: 1fr; gap: 40px; }
+    .etudes-case-grid.reverse { direction: ltr; }
+    .etudes-case-imgs { height: 280px; }
+    .etudes-case-imgs img { width: 70%; height: 240px; }
+    .etudes-header { padding: 48px 20px 40px; }
+    .etudes-nav-pills { flex-wrap: wrap; gap: 8px; }
+    /* footer mobile */
+    .footer-pro-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-pro-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-pro-bottom-links { flex-wrap: wrap; justify-content: center; }
+    /* cases grid mobile */
+    .cases-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -712,6 +729,7 @@
 </nav>
 
 <!-- ══════════════════════ PAGES SLIDER ══════════════════════ -->
+<div class="slider-wrapper">
 <div class="pages-slider">
 
 <!-- ══════════════════════ LANDING ══════════════════════ -->
@@ -1830,6 +1848,7 @@
 </div>
 
 </div><!-- /.pages-slider -->
+</div><!-- /.slider-wrapper -->
 
 <script>
   // ── PAGE ROUTING ──
