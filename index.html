@@ -277,6 +277,26 @@
   /* ── ROI SECTION ── */
   .roi-section { background:var(--soft); border-radius:var(--radius); max-width:calc(100% - 104px); margin:0 52px 88px; padding:72px 64px; }
   .roi-inputs { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:28px; }
+  .roi-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+  .roi-card { background:white; border-radius:18px; padding:28px 20px; text-align:center; border:1px solid #EAE6E0; }
+
+  /* ── DASHBOARD MOBILE NAV ── */
+  .dash-mob-nav {
+    display: none;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding: 12px 16px; gap: 8px;
+    background: var(--ink); border-bottom: 1px solid rgba(255,255,255,.08);
+    scrollbar-width: none;
+  }
+  .dash-mob-nav::-webkit-scrollbar { display: none; }
+  .dash-mob-btn {
+    flex-shrink: 0; padding: 7px 14px; border-radius: 100px;
+    border: 1px solid rgba(255,255,255,.15); background: transparent;
+    color: rgba(255,255,255,.5); font-size: .75rem; font-weight: 500;
+    cursor: pointer; transition: .2s; font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .dash-mob-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
   /* ── DASHBOARD BLOCKS ── */
   .dash-blocks { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
 
@@ -709,9 +729,15 @@
     .charts-row { grid-template-columns: 1fr; }
     .dash-sidebar { display: none; }
     .dash-layout { grid-template-columns: 1fr; }
-    .dash-main { padding: 24px 16px; }
+    .dash-main { padding: 20px 16px; }
     .bottom-row { grid-template-columns: 1fr; }
     .dash-footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 16px; }
+    .dash-mob-nav { display: flex; }
+    /* ROI */
+    .roi-cards { grid-template-columns: 1fr; gap: 12px; }
+    .roi-card { padding: 20px 16px; }
+    /* contact */
+    .form-row { grid-template-columns: 1fr; }
     /* études */
     .etudes-case { padding: 52px 20px; }
     .etudes-case-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -1050,18 +1076,18 @@
         </button>
       </div>
       <div id="roi-results" style="display:none;opacity:0;transition:opacity .4s;">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;">
-          <div style="background:white;border-radius:18px;padding:28px 20px;text-align:center;border:1px solid #EAE6E0;">
+        <div class="roi-cards">
+          <div class="roi-card">
             <div style="font-size:1.8rem;margin-bottom:6px;">⭐</div>
             <div id="roi-avis" style="font-family:'Instrument Serif',serif;font-size:2.4rem;color:var(--accent);letter-spacing:-.02em;line-height:1;">0</div>
             <div style="font-size:.75rem;color:var(--muted);margin-top:6px;line-height:1.5;">avis Google<br>positifs / mois</div>
           </div>
-          <div style="background:white;border-radius:18px;padding:28px 20px;text-align:center;border:1px solid #EAE6E0;">
+          <div class="roi-card">
             <div style="font-size:1.8rem;margin-bottom:6px;">🧲</div>
             <div id="roi-nouveaux" style="font-family:'Instrument Serif',serif;font-size:2.4rem;color:var(--blue-mid);letter-spacing:-.02em;line-height:1;">0</div>
             <div style="font-size:.75rem;color:var(--muted);margin-top:6px;line-height:1.5;">nouveaux clients<br>/ mois</div>
           </div>
-          <div style="background:white;border-radius:18px;padding:28px 20px;text-align:center;border:1px solid #EAE6E0;">
+          <div class="roi-card">
             <div style="font-size:1.8rem;margin-bottom:6px;">💶</div>
             <div id="roi-ca" style="font-family:'Instrument Serif',serif;font-size:2.4rem;color:var(--green-soft);letter-spacing:-.02em;line-height:1;">0€</div>
             <div style="font-size:.75rem;color:var(--muted);margin-top:6px;line-height:1.5;">CA additionnel<br>estimé / mois</div>
@@ -1398,6 +1424,16 @@
 <div id="dashboard" class="page dashboard-page">
   <!-- Toast notification -->
   <div id="dash-toast" style="position:fixed;bottom:32px;right:32px;background:var(--ink);color:white;padding:12px 20px;border-radius:12px;font-size:.84rem;opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;"></div>
+
+  <!-- Nav mobile dashboard (visible uniquement sur mobile) -->
+  <div class="dash-mob-nav" id="dash-mob-nav">
+    <button class="dash-mob-btn active" data-tab="overview" onclick="dashNav(this)">📊 Vue d'ensemble</button>
+    <button class="dash-mob-btn" data-tab="bornes" onclick="dashNav(this)">🎰 Mes bornes</button>
+    <button class="dash-mob-btn" data-tab="goodies" onclick="dashNav(this)">🎁 Goodies</button>
+    <button class="dash-mob-btn" data-tab="clients" onclick="dashNav(this)">👥 Clients</button>
+    <button class="dash-mob-btn" data-tab="perso" onclick="dashNav(this)">🎨 Perso</button>
+    <button class="dash-mob-btn" data-tab="settings" onclick="dashNav(this)">⚙️ Réglages</button>
+  </div>
 
   <div class="dash-layout">
     <!-- SIDEBAR -->
@@ -1989,9 +2025,10 @@
 
   // ── DASHBOARD NAVIGATION ──
   function dashNav(el) {
-    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-    el.classList.add('active');
     const tab = el.dataset.tab;
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.dash-mob-btn').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(i => i.classList.add('active'));
     document.querySelectorAll('.dash-tab').forEach(t => t.style.display = 'none');
     const panel = document.getElementById('tab-' + tab);
     if (panel) { panel.style.display = 'block'; panel.style.animation = 'none'; void panel.offsetWidth; panel.style.animation = ''; }
