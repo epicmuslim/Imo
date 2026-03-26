@@ -72,18 +72,10 @@
   }
   .nav-cta:hover { background: #3a3530 !important; transform: translateY(-1px); }
 
-  /* ── PAGE SLIDER ── */
+  /* ── PAGES ── */
   html, body { overflow-x: hidden; max-width: 100%; }
-  body { overflow-x: hidden; }
-  .slider-wrapper { width: 100vw; overflow: hidden; position: relative; }
-  .pages-slider {
-    display: flex;
-    align-items: flex-start;
-    transition: transform 0.58s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-    width: 300vw;
-  }
-  .page { min-width: 100vw; width: 100vw; flex-shrink: 0; overflow-x: hidden; }
+  .page { display: none; width: 100%; }
+  .page.active { display: block; }
 
   /* ── SCROLL REVEAL ── */
   .reveal {
@@ -711,6 +703,28 @@
     /* cases grid mobile */
     .cases-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── MOBILE TAB BAR ── */
+  .mob-tabbar {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--ink); border-top: 1px solid rgba(255,255,255,.08);
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  }
+  .mob-tabbar-inner { display: flex; justify-content: space-around; align-items: center; }
+  .mob-tab {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    color: rgba(255,255,255,.4); font-size: .62rem; font-weight: 500;
+    letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
+    padding: 4px 16px; border-radius: 12px; transition: color .2s, background .2s;
+    border: none; background: none; font-family: 'DM Sans', sans-serif;
+  }
+  .mob-tab .mob-icon { font-size: 1.2rem; }
+  .mob-tab.mob-active { color: white; background: rgba(255,255,255,.08); }
+  @media(max-width:900px) {
+    .mob-tabbar { display: block; }
+    body { padding-bottom: 68px; }
+  }
 </style>
 </head>
 <body>
@@ -728,12 +742,11 @@
   </ul>
 </nav>
 
-<!-- ══════════════════════ PAGES SLIDER ══════════════════════ -->
-<div class="slider-wrapper">
-<div class="pages-slider">
+<!-- ══════════════════════ PAGES ══════════════════════ -->
+<div class="pages-container">
 
 <!-- ══════════════════════ LANDING ══════════════════════ -->
-<div id="landing" class="page">
+<div id="landing" class="page active">
 
   <!-- HERO -->
   <div class="hero">
@@ -1847,17 +1860,17 @@
   </div><!-- /.dash-layout -->
 </div>
 
-</div><!-- /.pages-slider -->
-</div><!-- /.slider-wrapper -->
+</div><!-- /.pages-container -->
 
 <script>
   // ── PAGE ROUTING ──
   function showPage(id) {
-    const slider = document.querySelector('.pages-slider');
-    const positions = { landing: '0', etudes: '-100vw', dashboard: '-200vw' };
-    slider.style.transform = `translateX(${positions[id] || '0'})`;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) { target.classList.add('active'); target.scrollTop = 0; }
     window.scrollTo(0, 0);
-    document.body.style.overflow = (id === 'dashboard' || id === 'etudes') ? 'hidden' : '';
+    document.body.style.overflow = (id === 'dashboard') ? 'hidden' : '';
+    // nav CTA
     const cta = document.getElementById('nav-cta');
     if (id === 'dashboard') {
       cta.textContent = '← Retour au site';
@@ -1866,14 +1879,17 @@
       cta.textContent = 'Voir le dashboard';
       cta.onclick = () => { showPage('dashboard'); return false; };
     }
+    // mobile tab bar active state
+    document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('mob-active'));
+    const tab = document.querySelector(`.mob-tab[data-page="${id}"]`);
+    if (tab) tab.classList.add('mob-active');
   }
 
   function scrollToCase(id) {
     setTimeout(() => {
-      const page = document.getElementById('etudes');
       const el = document.getElementById('case-' + id);
-      if (page && el) page.scrollTo({ top: el.offsetTop - 72, behavior: 'smooth' });
-    }, 420);
+      if (el) window.scrollTo({ top: el.offsetTop - 72, behavior: 'smooth' });
+    }, 100);
   }
 
   // ── NAV SCROLL STATE ──
@@ -2096,5 +2112,21 @@
     document.head.appendChild(s);
   })();
 </script>
+
+<!-- ── MOBILE TAB BAR ── -->
+<div class="mob-tabbar">
+  <div class="mob-tabbar-inner">
+    <button class="mob-tab mob-active" data-page="landing" onclick="showPage('landing')">
+      <span class="mob-icon">🏠</span>Accueil
+    </button>
+    <button class="mob-tab" data-page="etudes" onclick="showPage('etudes')">
+      <span class="mob-icon">📊</span>Cas clients
+    </button>
+    <button class="mob-tab" data-page="dashboard" onclick="showPage('dashboard')">
+      <span class="mob-icon">⚡</span>Dashboard
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
