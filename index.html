@@ -632,6 +632,9 @@
   .etudes-case-grid.reverse { direction: rtl; }
   .etudes-case-grid.reverse > * { direction: ltr; }
   .etudes-case-img { width: 100%; height: 560px; object-fit: cover; border-radius: 24px; display: block; box-shadow: 0 32px 80px rgba(0,0,0,0.14); }
+  .etudes-case-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .etudes-case-imgs img { width: 100%; height: 270px; object-fit: cover; border-radius: 18px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); display: block; }
+  .etudes-case-imgs img:first-child { height: 290px; }
   .etudes-case-tag { font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; display: block; font-weight: 500; }
   .etudes-case-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.06; letter-spacing: -.025em; margin-bottom: 24px; }
   .etudes-case-title em { font-style: italic; color: var(--accent); }
@@ -884,7 +887,7 @@
     <div class="cases-grid reveal reveal-d1">
 
       <div class="case-card" onclick="showPage('etudes'); scrollToCase('cafe')" style="cursor:pointer;">
-        <img src="image/borne%20caf%C3%A9.jpg" alt="Borne café" class="case-photo">
+        <img src="image/caf%C3%A9.jpg" alt="Borne café" class="case-photo">
         <div class="case-body">
           <span class="case-tag">☕ Café · Paris 11e</span>
           <div class="case-stat">450 avis Google<br>en 1 mois</div>
@@ -904,11 +907,11 @@
       </div>
 
       <div class="case-card" onclick="showPage('etudes'); scrollToCase('horloger')" style="cursor:pointer;">
-        <img src="image/borne%20horloger.jpg" alt="Borne horloger" class="case-photo">
+        <img src="image/borne%20padel.jpg" alt="Borne padel" class="case-photo">
         <div class="case-body">
-          <span class="case-tag">⌚ Horloger · Bordeaux</span>
-          <div class="case-stat">×3.2 de ROI<br>dès J+30</div>
-          <p class="case-desc">Investissement rentabilisé en moins d'un mois. Le CA additionnel couvre l'abonnement quatre fois.</p>
+          <span class="case-tag">🎾 Padel · Sport & Loisirs</span>
+          <div class="case-stat">+380 avis Google<br>en 6 semaines</div>
+          <p class="case-desc">N°1 Google local en 6 semaines. +62% de réservations en ligne grâce à la borne à l'entrée des courts.</p>
           <div style="margin-top:14px;font-size:.75rem;font-weight:600;color:var(--accent);">Lire l'étude →</div>
         </div>
       </div>
@@ -1158,7 +1161,7 @@
     <div class="etudes-nav-pills">
       <button class="etudes-nav-pill" onclick="scrollToCase('cafe')">☕ Café Paris</button>
       <button class="etudes-nav-pill" onclick="scrollToCase('garage')">🔧 Garage Lyon</button>
-      <button class="etudes-nav-pill" onclick="scrollToCase('horloger')">⌚ Horloger Bordeaux</button>
+      <button class="etudes-nav-pill" onclick="scrollToCase('horloger')">🎾 Padel Arena</button>
       <button class="etudes-nav-pill" onclick="scrollToCase('store')">🛍️ Concept store Nantes</button>
     </div>
   </div>
@@ -1166,7 +1169,10 @@
   <!-- Café -->
   <div class="etudes-case" id="case-cafe">
     <div class="etudes-case-grid">
-      <img src="image/borne%20caf%C3%A9.jpg" alt="Café Paris" class="etudes-case-img">
+      <div class="etudes-case-imgs">
+        <img src="image/caf%C3%A9.jpg" alt="Café Paris extérieur">
+        <img src="image/borne%20caf%C3%A9.jpg" alt="Borne Café Paris">
+      </div>
       <div>
         <span class="etudes-case-tag">☕ Restauration · Paris 11e</span>
         <h2 class="etudes-case-title">De 38 à 488 avis Google<br><em>en quatre semaines.</em></h2>
@@ -1186,7 +1192,10 @@
   <!-- Garage -->
   <div class="etudes-case" id="case-garage">
     <div class="etudes-case-grid reverse">
-      <img src="image/borne%20garage.jpg" alt="Garage Lyon" class="etudes-case-img">
+      <div class="etudes-case-imgs">
+        <img src="image/garage.jpg" alt="Garage Lyon extérieur">
+        <img src="image/borne%20garage.jpg" alt="Borne Garage Lyon">
+      </div>
       <div>
         <span class="etudes-case-tag">🔧 Automobile · Lyon</span>
         <h2 class="etudes-case-title">+87% de clients récurrents.<br><em>Le jeton comme rituel.</em></h2>
@@ -1203,21 +1212,24 @@
     </div>
   </div>
 
-  <!-- Horloger -->
+  <!-- Padel -->
   <div class="etudes-case" id="case-horloger">
     <div class="etudes-case-grid">
-      <img src="image/borne%20horloger.jpg" alt="Horloger Bordeaux" class="etudes-case-img">
+      <div class="etudes-case-imgs">
+        <img src="image/padel.jpg" alt="Club de padel extérieur">
+        <img src="image/borne%20padel.jpg" alt="Borne Padel">
+      </div>
       <div>
-        <span class="etudes-case-tag">⌚ Horlogerie · Bordeaux</span>
-        <h2 class="etudes-case-title">ROI ×3.2,<br><em>rentabilisé en 30 jours.</em></h2>
-        <p class="etudes-case-intro">Maison Verdier est une horlogerie indépendante fondée en 1987. Note Google initiale : 3,8★ avec 22 avis — essentiellement des réclamations. La vraie satisfaction client était haute, il manquait juste un déclencheur. Après Imo : 4,8★ en huit semaines, et un CA additionnel qui couvre l'abonnement quatre fois.</p>
+        <span class="etudes-case-tag">🎾 Sport & Loisirs · Padel</span>
+        <h2 class="etudes-case-title">N°1 Google en 6 semaines.<br><em>Le padel qui cartonne.</em></h2>
+        <p class="etudes-case-intro">Le club accueille des joueurs passionnés mais peina longtemps à convertir leur enthousiasme en avis Google. La borne Imo, installée à l'entrée des courts, transforme chaque fin de session en moment de jeu. Résultat : une visibilité locale explosive et un taux de réservation en hausse constante.</p>
         <div class="etudes-stats">
-          <div class="etudes-stat"><span class="n">×3.2</span><span class="l">ROI sur<br>l'abonnement</span></div>
-          <div class="etudes-stat"><span class="n">+4 200€</span><span class="l">CA additionnel<br>au 1er mois</span></div>
-          <div class="etudes-stat"><span class="n">3,8→4,8★</span><span class="l">note Google<br>en 8 semaines</span></div>
+          <div class="etudes-stat"><span class="n">+380</span><span class="l">avis Google<br>en 6 semaines</span></div>
+          <div class="etudes-stat"><span class="n">3,6→4,9★</span><span class="l">note Google<br>en 1 mois</span></div>
+          <div class="etudes-stat"><span class="n">+62%</span><span class="l">réservations<br>en ligne</span></div>
         </div>
-        <p class="etudes-quote">« J'avais des clients heureux depuis 30 ans qui n'avaient jamais laissé un avis. Maintenant ils le font en souriant avant de partir. »</p>
-        <span class="etudes-quote-cite">— Henri V., maître horloger, Maison Verdier</span>
+        <p class="etudes-quote">« Les joueurs adorent la borne, c'est devenu un rituel après chaque match. Et nos réservations n'ont jamais été aussi pleines. »</p>
+        <span class="etudes-quote-cite">— Directeur du club, Padel Arena</span>
         <a href="#contact" onclick="showPage('landing')" class="btn-primary">Obtenir ce résultat →</a>
       </div>
     </div>
