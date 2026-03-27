@@ -1184,15 +1184,15 @@
           </div>
         </div>
       </div>
-      <div class="contact-form reveal reveal-d2">
+      <form class="contact-form reveal reveal-d2" action="https://formspree.io/f/xvzvglgb" method="POST">
         <div class="form-row">
-          <div class="form-group"><label>Prénom</label><input type="text" placeholder="Sophie"></div>
-          <div class="form-group"><label>Nom</label><input type="text" placeholder="Martin"></div>
+          <div class="form-group"><label>Prénom</label><input type="text" name="prenom" placeholder="Sophie"></div>
+          <div class="form-group"><label>Nom</label><input type="text" name="nom" placeholder="Martin"></div>
         </div>
-        <div class="form-group"><label>Email professionnel</label><input type="email" placeholder="sophie@moncommerce.fr"></div>
+        <div class="form-group"><label>Email professionnel</label><input type="email" name="email" placeholder="sophie@moncommerce.fr" required></div>
         <div class="form-group">
           <label>Type d'établissement</label>
-          <select>
+          <select name="type_etablissement">
             <option value="">Sélectionnez...</option>
             <option>Café / Restaurant</option>
             <option>Boulangerie / Pâtisserie</option>
@@ -1204,16 +1204,16 @@
         </div>
         <div class="form-group">
           <label>Nombre de points de vente</label>
-          <select>
+          <select name="points_de_vente">
             <option>1 établissement</option>
             <option>2–5 établissements</option>
             <option>6–20 établissements</option>
             <option>20+ établissements</option>
           </select>
         </div>
-        <div class="form-group"><label>Message (optionnel)</label><textarea placeholder="Décrivez votre contexte, vos attentes..."></textarea></div>
-        <button class="form-submit" onclick="handleSubmit()">Envoyer ma demande →</button>
-      </div>
+        <div class="form-group"><label>Message (optionnel)</label><textarea name="message" placeholder="Décrivez votre contexte, vos attentes..."></textarea></div>
+        <button type="submit" class="form-submit">Envoyer ma demande →</button>
+      </form>
     </div>
   </section>
 
