@@ -337,17 +337,11 @@
   .db-body { display:grid; grid-template-columns:1fr 1fr; }
   .db-chart-wrap { padding:18px 16px; border-right:1px solid #EAE6E0; }
   .db-chart-title { font-size:.6rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
-  .db-chart-inner { position:relative; height:96px; background:#F8F7F5; border-radius:8px; overflow:hidden; }
-  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; padding:0 0 0 24px; }
-  .db-gridline { border-top:1px solid rgba(255,255,255,.9); position:relative; flex:1; }
-  .db-gridline span { position:absolute; left:-22px; top:-8px; font-size:.4rem; color:#B8B3AC; }
-  .db-bars { position:absolute; bottom:0; left:24px; right:6px; display:flex; align-items:flex-end; gap:2px; height:90%; }
-  .db-bar { flex:1; border-radius:4px 4px 0 0; background:linear-gradient(to bottom, #4a4440, #1C1C1E); opacity:.5; transform-origin:bottom; animation:bar-grow .5s cubic-bezier(.34,1.26,.64,1) backwards; transition:opacity .18s; }
-  .db-bar:nth-child(10) { background:linear-gradient(to bottom, #D4A96A, #9C6D2E); opacity:1; }
-  .db-bar:hover { opacity:.85; cursor:default; }
-  .db-bar:nth-child(1){animation-delay:.02s} .db-bar:nth-child(2){animation-delay:.05s} .db-bar:nth-child(3){animation-delay:.08s} .db-bar:nth-child(4){animation-delay:.11s} .db-bar:nth-child(5){animation-delay:.14s} .db-bar:nth-child(6){animation-delay:.17s} .db-bar:nth-child(7){animation-delay:.20s} .db-bar:nth-child(8){animation-delay:.23s} .db-bar:nth-child(9){animation-delay:.26s} .db-bar:nth-child(10){animation-delay:.29s} .db-bar:nth-child(11){animation-delay:.32s} .db-bar:nth-child(12){animation-delay:.35s}
-  @keyframes bar-grow { from{transform:scaleY(0);opacity:0} to{transform:scaleY(1)} }
-  .db-chart-labels { display:flex; gap:2px; padding-left:24px; margin-top:5px; }
+  .db-curve { width:100%; height:82px; display:block; overflow:visible; }
+  .db-curve-area { fill:url(#cg); }
+  .db-curve-line { fill:none; stroke:#9C6D2E; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .db-curve-dot { fill:#9C6D2E; }
+  .db-chart-labels { display:flex; gap:0; margin-top:4px; }
   .db-chart-labels span { flex:1; font-size:.39rem; color:#B8B3AC; text-align:center; letter-spacing:-.01em; }
   .db-breakdown { padding:18px 16px; display:flex; flex-direction:column; gap:0; }
   .db-breakdown-list { display:flex; flex-direction:column; gap:9px; margin-bottom:4px; }
@@ -1083,59 +1077,48 @@
       <div class="db-kpi-row">
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#1C1C1E">&#127921;</div>
-          <div class="db-kpi-card-val">5&thinsp;180</div>
+          <div class="db-kpi-card-val">9&thinsp;640</div>
           <div class="db-kpi-card-lbl">Parties jouées</div>
-          <div class="db-kpi-card-trend up">↑ 41%</div>
+          <div class="db-kpi-card-trend up">↑ 54%</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#2D9B57">&#x1F501;</div>
-          <div class="db-kpi-card-val">89%</div>
+          <div class="db-kpi-card-val">93%</div>
           <div class="db-kpi-card-lbl">Récurrence</div>
-          <div class="db-kpi-card-trend up">↑ 16 pts</div>
+          <div class="db-kpi-card-trend up">↑ 21 pts</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#4285F4">G</div>
-          <div class="db-kpi-card-val">7&thinsp;340</div>
+          <div class="db-kpi-card-val">14&thinsp;280</div>
           <div class="db-kpi-card-lbl">Avis Google</div>
-          <div class="db-kpi-card-trend up">↑ 38%</div>
+          <div class="db-kpi-card-trend up">↑ 61%</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#BF5AF2;font-size:.55rem">B€N</div>
-          <div class="db-kpi-card-val">+4&thinsp;620&thinsp;€</div>
+          <div class="db-kpi-card-val">+9&thinsp;840&thinsp;€</div>
           <div class="db-kpi-card-lbl">Bénéfice estimé</div>
-          <div class="db-kpi-card-trend up">↑ 29%</div>
+          <div class="db-kpi-card-trend up">↑ 43%</div>
         </div>
       </div>
 
       <!-- Bottom: chart + breakdown -->
       <div class="db-body">
 
-        <!-- Bar chart -->
+        <!-- Curve chart -->
         <div class="db-chart-wrap">
           <div class="db-chart-title">Parties / mois</div>
-          <div class="db-chart-inner">
-            <div class="db-grid">
-              <div class="db-gridline"><span>4k</span></div>
-              <div class="db-gridline"><span>3k</span></div>
-              <div class="db-gridline"><span>2k</span></div>
-              <div class="db-gridline"><span>1k</span></div>
-            </div>
-            <div class="db-bars">
-              <div class="db-bar" style="height:20%"></div>
-              <div class="db-bar" style="height:26%"></div>
-              <div class="db-bar" style="height:34%"></div>
-              <div class="db-bar" style="height:43%"></div>
-              <div class="db-bar" style="height:54%"></div>
-              <div class="db-bar" style="height:64%"></div>
-              <div class="db-bar" style="height:71%"></div>
-              <div class="db-bar" style="height:80%"></div>
-              <div class="db-bar" style="height:88%"></div>
-              <div class="db-bar" style="height:96%"></div>
-              <div class="db-bar" style="height:93%"></div>
-              <div class="db-bar" style="height:82%"></div>
-            </div>
-          </div>
-          <div class="db-chart-labels">
+          <svg class="db-curve" viewBox="0 0 300 82" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9C6D2E" stop-opacity=".22"/>
+                <stop offset="100%" stop-color="#9C6D2E" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="db-curve-area" d="M0,68 C5,67 10,64 27,61 C38,59 46,55 55,53 C64,51 73,45 82,43 C91,41 100,35 109,32 C118,29 127,24 136,22 C145,20 155,19 164,17 C173,15 181,12 191,11 C200,10 209,9 218,8 C227,7 237,6 246,5 C255,5 264,8 273,10 C282,12 292,14 300,17 L300,82 L0,82 Z"/>
+            <path class="db-curve-line" d="M0,68 C5,67 10,64 27,61 C38,59 46,55 55,53 C64,51 73,45 82,43 C91,41 100,35 109,32 C118,29 127,24 136,22 C145,20 155,19 164,17 C173,15 181,12 191,11 C200,10 209,9 218,8 C227,7 237,6 246,5 C255,5 264,8 273,10 C282,12 292,14 300,17"/>
+            <circle class="db-curve-dot" cx="246" cy="5" r="3.5"/>
+          </svg>
+          <div class="db-chart-labels" style="padding-left:0;">
             <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
             <span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span>
             <span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
