@@ -126,6 +126,21 @@
     color: var(--ink);
   }
   .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .hero-sticker {
+    position: absolute; z-index: 10; pointer-events: none;
+    background: white; border-radius: 14px;
+    padding: 10px 16px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.13), 0 1px 4px rgba(0,0,0,.07);
+    border: 1px solid rgba(0,0,0,.05);
+    backdrop-filter: blur(6px);
+  }
+  .hero-sticker-label {
+    font-size: .6rem; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted); font-weight: 500; margin-bottom: 2px;
+  }
+  .hero-sticker-val {
+    font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.1;
+  }
   .btn-primary {
     background: var(--ink); color: var(--cream);
     padding: 15px 34px; border-radius: 100px;
@@ -698,7 +713,13 @@
     nav.scrolled { padding: 10px 20px; }
     nav ul { display: none; }
     /* hero */
-    .hero { grid-template-columns: 1fr; padding: 90px 20px 50px; gap: 32px; }
+    .hero { grid-template-columns: 1fr; padding: 90px 20px 40px; gap: 0; }
+    .hero > div:first-child { padding-bottom: 16px; }
+    .hero h1 { font-size: 3rem; line-height: 1.05; margin-bottom: 14px; }
+    .hero-sub { font-size: .9rem; margin-bottom: 24px; }
+    .hero-sticker { padding: 8px 14px; border-radius: 12px; }
+    .hero-sticker-val { font-size: .95rem; }
+    .hero-sticker-label { font-size: .55rem; }
     .hero-visuals { display: none; }
     .hero-anim { transform: none !important; opacity: 1 !important; }
     /* stats bar */
@@ -763,7 +784,7 @@
     .cases-grid { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: 1fr; }
     .footer-pro-top { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 2.4rem; }
+    .hero h1 { font-size: 2.2rem; }
     .pills { flex-wrap: wrap; }
     .etudes-case-imgs { height: 220px; }
     .etudes-case-imgs img { width: 65%; height: 190px; }
@@ -821,11 +842,6 @@
       <div class="hero-label hero-anim hero-anim-1">Fidélisation · E-réputation · Acquisition</div>
       <h1 class="hero-anim hero-anim-2">Vos clients jouent.<br>Ils reviennent.<br><em>Ils en parlent.</em></h1>
       <p class="hero-sub hero-anim hero-anim-3">Une borne posée sur votre comptoir transforme chaque achat en expérience mémorable — et chaque client satisfait en ambassadeur.</p>
-      <div class="hero-pills hero-anim hero-anim-4">
-        <span class="pill">⭐ N°1 Google dans votre domaine</span>
-        <span class="pill">🔁 87% de retour client</span>
-        <span class="pill">📈 ×3.2 ROI moyen</span>
-      </div>
       <div class="hero-actions hero-anim hero-anim-5">
         <a href="#howit" class="btn-primary">Découvrir comment ça marche →</a>
         <a href="#roi" class="btn-ghost">Calculer mon ROI →</a>
@@ -833,7 +849,25 @@
     </div>
 
     <!-- Hero 3D model -->
-    <div class="hero-anim hero-anim-5" style="height:520px;width:100%;">
+    <div class="hero-anim hero-anim-5" style="height:520px;width:100%;position:relative;">
+
+      <!-- Sticker 1 — N°1 Google -->
+      <div class="hero-sticker" style="top:12%;left:3%;transform:rotate(-4deg);">
+        <div class="hero-sticker-label">Avis Google</div>
+        <div class="hero-sticker-val">N°1 ⭐</div>
+      </div>
+
+      <!-- Sticker 2 — ROI -->
+      <div class="hero-sticker" style="bottom:22%;right:3%;transform:rotate(3.5deg);">
+        <div class="hero-sticker-label">ROI moyen</div>
+        <div class="hero-sticker-val">×3.2 📈</div>
+      </div>
+
+      <!-- Sticker 3 — Retour client -->
+      <div class="hero-sticker" style="bottom:8%;left:5%;transform:rotate(-2.5deg);">
+        <div class="hero-sticker-label">Retour client</div>
+        <div class="hero-sticker-val">87% 🔁</div>
+      </div>
       <model-viewer
         id="hero-model"
         src="3D/borne%203D.glb"
