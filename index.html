@@ -337,18 +337,18 @@
   .db-body { display:grid; grid-template-columns:1fr 1fr; }
   .db-chart-wrap { padding:18px 16px; border-right:1px solid #EAE6E0; }
   .db-chart-title { font-size:.6rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
-  .db-chart-inner { position:relative; height:88px; }
-  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; }
-  .db-gridline { border-top:1px dashed #EAE6E0; position:relative; flex:1; }
-  .db-gridline span { position:absolute; left:0; top:-8px; font-size:.41rem; color:#C0BAB3; }
-  .db-bars { position:absolute; bottom:0; left:24px; right:0; display:flex; align-items:flex-end; gap:3px; height:100%; }
-  .db-bar { flex:1; border-radius:2px 2px 0 0; background:var(--ink); opacity:.55; transform-origin:bottom; animation:bar-grow .6s ease-out backwards; }
-  .db-bar:nth-child(10) { background:var(--accent); opacity:1; }
-  .db-bar:hover { opacity:1; cursor:default; }
-  .db-bar:nth-child(1){animation-delay:.03s} .db-bar:nth-child(2){animation-delay:.06s} .db-bar:nth-child(3){animation-delay:.09s} .db-bar:nth-child(4){animation-delay:.12s} .db-bar:nth-child(5){animation-delay:.15s} .db-bar:nth-child(6){animation-delay:.18s} .db-bar:nth-child(7){animation-delay:.21s} .db-bar:nth-child(8){animation-delay:.24s} .db-bar:nth-child(9){animation-delay:.27s} .db-bar:nth-child(10){animation-delay:.30s} .db-bar:nth-child(11){animation-delay:.33s} .db-bar:nth-child(12){animation-delay:.36s}
-  @keyframes bar-grow { from{transform:scaleY(0)} to{transform:scaleY(1)} }
-  .db-chart-labels { display:flex; gap:3px; padding-left:24px; margin-top:4px; }
-  .db-chart-labels span { flex:1; font-size:.4rem; color:#B8B3AC; text-align:center; }
+  .db-chart-inner { position:relative; height:96px; background:#F8F7F5; border-radius:8px; overflow:hidden; }
+  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; padding:0 0 0 24px; }
+  .db-gridline { border-top:1px solid rgba(255,255,255,.9); position:relative; flex:1; }
+  .db-gridline span { position:absolute; left:-22px; top:-8px; font-size:.4rem; color:#B8B3AC; }
+  .db-bars { position:absolute; bottom:0; left:24px; right:6px; display:flex; align-items:flex-end; gap:2px; height:90%; }
+  .db-bar { flex:1; border-radius:4px 4px 0 0; background:linear-gradient(to bottom, #4a4440, #1C1C1E); opacity:.5; transform-origin:bottom; animation:bar-grow .5s cubic-bezier(.34,1.26,.64,1) backwards; transition:opacity .18s; }
+  .db-bar:nth-child(10) { background:linear-gradient(to bottom, #D4A96A, #9C6D2E); opacity:1; }
+  .db-bar:hover { opacity:.85; cursor:default; }
+  .db-bar:nth-child(1){animation-delay:.02s} .db-bar:nth-child(2){animation-delay:.05s} .db-bar:nth-child(3){animation-delay:.08s} .db-bar:nth-child(4){animation-delay:.11s} .db-bar:nth-child(5){animation-delay:.14s} .db-bar:nth-child(6){animation-delay:.17s} .db-bar:nth-child(7){animation-delay:.20s} .db-bar:nth-child(8){animation-delay:.23s} .db-bar:nth-child(9){animation-delay:.26s} .db-bar:nth-child(10){animation-delay:.29s} .db-bar:nth-child(11){animation-delay:.32s} .db-bar:nth-child(12){animation-delay:.35s}
+  @keyframes bar-grow { from{transform:scaleY(0);opacity:0} to{transform:scaleY(1)} }
+  .db-chart-labels { display:flex; gap:2px; padding-left:24px; margin-top:5px; }
+  .db-chart-labels span { flex:1; font-size:.39rem; color:#B8B3AC; text-align:center; letter-spacing:-.01em; }
   .db-breakdown { padding:18px 16px; display:flex; flex-direction:column; gap:0; }
   .db-breakdown-list { display:flex; flex-direction:column; gap:9px; margin-bottom:4px; }
   .db-br-item { display:flex; flex-direction:column; gap:4px; }
@@ -1083,27 +1083,27 @@
       <div class="db-kpi-row">
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#1C1C1E">&#127921;</div>
-          <div class="db-kpi-card-val">3&thinsp;240</div>
+          <div class="db-kpi-card-val">5&thinsp;180</div>
           <div class="db-kpi-card-lbl">Parties jouées</div>
-          <div class="db-kpi-card-trend up">↑ 31%</div>
+          <div class="db-kpi-card-trend up">↑ 41%</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#2D9B57">&#x1F501;</div>
-          <div class="db-kpi-card-val">84%</div>
+          <div class="db-kpi-card-val">89%</div>
           <div class="db-kpi-card-lbl">Récurrence</div>
-          <div class="db-kpi-card-trend up">↑ 11 pts</div>
+          <div class="db-kpi-card-trend up">↑ 16 pts</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#4285F4">G</div>
-          <div class="db-kpi-card-val">4&thinsp;820</div>
+          <div class="db-kpi-card-val">7&thinsp;340</div>
           <div class="db-kpi-card-lbl">Avis Google</div>
-          <div class="db-kpi-card-trend up">↑ 28%</div>
+          <div class="db-kpi-card-trend up">↑ 38%</div>
         </div>
         <div class="db-kpi-card">
           <div class="db-kpi-card-icon" style="background:#BF5AF2;font-size:.55rem">B€N</div>
-          <div class="db-kpi-card-val">+2&thinsp;180&thinsp;€</div>
+          <div class="db-kpi-card-val">+4&thinsp;620&thinsp;€</div>
           <div class="db-kpi-card-lbl">Bénéfice estimé</div>
-          <div class="db-kpi-card-trend up">↑ 15%</div>
+          <div class="db-kpi-card-trend up">↑ 29%</div>
         </div>
       </div>
 
@@ -1144,19 +1144,19 @@
 
         <!-- Engagement breakdown -->
         <div class="db-breakdown">
-          <div class="db-chart-title">Engagement demandé</div>
+          <div class="db-chart-title">Taux de complétion</div>
           <div class="db-breakdown-list">
             <div class="db-br-item">
-              <div class="db-br-top"><span class="db-br-label">⭐ Avis Google</span><span class="db-br-pct">78%</span></div>
-              <div class="db-br-bar"><div class="db-br-fill" style="width:78%;background:#4285F4"></div></div>
+              <div class="db-br-top"><span class="db-br-label">⭐ Avis Google</span><span class="db-br-pct">94%</span></div>
+              <div class="db-br-bar"><div class="db-br-fill" style="width:94%;background:#4285F4"></div></div>
             </div>
             <div class="db-br-item">
-              <div class="db-br-top"><span class="db-br-label">&#128248; Instagram</span><span class="db-br-pct">15%</span></div>
-              <div class="db-br-bar"><div class="db-br-fill" style="width:15%;background:#E1306C"></div></div>
+              <div class="db-br-top"><span class="db-br-label">&#128248; Instagram</span><span class="db-br-pct">87%</span></div>
+              <div class="db-br-bar"><div class="db-br-fill" style="width:87%;background:#E1306C"></div></div>
             </div>
             <div class="db-br-item">
-              <div class="db-br-top"><span class="db-br-label">&#128231; Newsletter</span><span class="db-br-pct">7%</span></div>
-              <div class="db-br-bar"><div class="db-br-fill" style="width:7%;background:#BF5AF2"></div></div>
+              <div class="db-br-top"><span class="db-br-label">&#128231; Newsletter</span><span class="db-br-pct">81%</span></div>
+              <div class="db-br-bar"><div class="db-br-fill" style="width:81%;background:#BF5AF2"></div></div>
             </div>
           </div>
           <div style="margin-top:14px;">
