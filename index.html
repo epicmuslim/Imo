@@ -802,7 +802,6 @@
     <li><a href="#roi">ROI</a></li>
     <li><a href="#pricing">Tarifs</a></li>
     <li><a href="#" onclick="showPage('etudes'); return false;">Cas clients</a></li>
-    <li><a href="#" id="nav-cta" onclick="showPage('dashboard'); return false;" class="nav-cta">Voir le dashboard</a></li>
   </ul>
 </nav>
 
@@ -957,11 +956,15 @@
             <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Notre IA analyse vos données et vous suggère les ajustements optimaux — horaires de boost, probabilité de gain, mix goodies — pour maximiser votre ROI en continu.</div>
           </div>
         </div>
-        <div style="text-align:right;margin-top:auto;">
-          <a href="#" onclick="showPage('dashboard'); return false;" style="font-size:.78rem;font-weight:600;color:white;background:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:100px;transition:background .2s,transform .2s;" onmouseover="this.style.background='#3a3530';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--ink)';this.style.transform=''">Voir le dashboard →</a>
-        </div>
       </div>
     </div>
+
+    <!-- Dashboard screenshots -->
+    <div class="reveal reveal-d3" style="display:flex;gap:14px;justify-content:center;align-items:flex-end;margin-top:32px;padding:0 16px;">
+      <img src="image/dashboard%201.png" alt="Dashboard Imo" style="width:220px;max-width:42vw;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.13);transform:rotate(-1.5deg) translateY(6px);object-fit:cover;pointer-events:none;user-select:none;">
+      <img src="image/dashboard%202.png" alt="Dashboard Imo" style="width:220px;max-width:42vw;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.13);transform:rotate(1deg);object-fit:cover;pointer-events:none;user-select:none;">
+    </div>
+
   </section>
 
   <!-- ── IMPACT (dark) ── -->
@@ -1237,7 +1240,6 @@
         <h4>Ressources</h4>
         <ul>
           <li onclick="showPage('etudes')">Études de cas</li>
-          <li onclick="showPage('dashboard')">Dashboard démo</li>
           <li>FAQ</li>
           <li>Blog</li>
         </ul>
@@ -1393,7 +1395,6 @@
         <h4>Ressources</h4>
         <ul>
           <li style="color:white;">Études de cas</li>
-          <li onclick="showPage('dashboard')">Dashboard démo</li>
           <li>FAQ</li>
           <li>Blog</li>
         </ul>
@@ -1420,519 +1421,7 @@
 
 </div>
 
-<!-- ══════════════════════ DASHBOARD ══════════════════════ -->
-<div id="dashboard" class="page dashboard-page">
-  <!-- Toast notification -->
-  <div id="dash-toast" style="position:fixed;bottom:32px;right:32px;background:var(--ink);color:white;padding:12px 20px;border-radius:12px;font-size:.84rem;opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;"></div>
 
-  <!-- Nav mobile dashboard (visible uniquement sur mobile) -->
-  <div class="dash-mob-nav" id="dash-mob-nav">
-    <button class="dash-mob-btn active" data-tab="overview" onclick="dashNav(this)">📊 Vue d'ensemble</button>
-    <button class="dash-mob-btn" data-tab="bornes" onclick="dashNav(this)">🎰 Mes bornes</button>
-    <button class="dash-mob-btn" data-tab="goodies" onclick="dashNav(this)">🎁 Goodies</button>
-    <button class="dash-mob-btn" data-tab="clients" onclick="dashNav(this)">👥 Clients</button>
-    <button class="dash-mob-btn" data-tab="perso" onclick="dashNav(this)">🎨 Perso</button>
-    <button class="dash-mob-btn" data-tab="settings" onclick="dashNav(this)">⚙️ Réglages</button>
-  </div>
-
-  <div class="dash-layout">
-    <!-- SIDEBAR -->
-    <div class="dash-sidebar">
-      <div class="dash-sidebar-logo">Imo<span>.</span></div>
-      <div class="sidebar-section-label">Analyse</div>
-      <div class="sidebar-item active" data-tab="overview" onclick="dashNav(this)"><span class="icon">📊</span> Vue d'ensemble</div>
-      <div class="sidebar-item" data-tab="bornes" onclick="dashNav(this)"><span class="icon">🎰</span> Mes bornes</div>
-      <div class="sidebar-item" data-tab="goodies" onclick="dashNav(this)"><span class="icon">🎁</span> Goodies</div>
-      <div class="sidebar-item" data-tab="clients" onclick="dashNav(this)"><span class="icon">👥</span> Clients</div>
-      <div class="sidebar-section-label">Réglages</div>
-      <div class="sidebar-item" data-tab="perso" onclick="dashNav(this)"><span class="icon">🎨</span> Personnalisation</div>
-      <div class="sidebar-item" data-tab="settings" onclick="dashNav(this)"><span class="icon">⚙️</span> Paramètres</div>
-      <div style="margin-top:auto;">
-        <div class="sidebar-item" onclick="showPage('landing')" style="border-top:1px solid rgba(255,255,255,0.07);padding-top:20px;">
-          <span class="icon">←</span> Retour au site
-        </div>
-      </div>
-    </div>
-
-    <!-- MAIN -->
-    <div class="dash-main">
-      <!-- shared header -->
-      <div class="dash-header">
-        <div>
-          <h1 id="dash-title">Bonjour, Café Lumière ☀️</h1>
-          <p id="dash-subtitle">Dernière synchro : aujourd'hui à 14:32 · <span style="color:#5A9B6E;font-weight:500;">● Borne active</span></p>
-        </div>
-        <div class="dash-top-right">
-          <select class="period-select" id="dash-period" onchange="dashPeriodChange()">
-            <option value="30">30 derniers jours</option>
-            <option value="7">7 derniers jours</option>
-            <option value="month">Ce mois-ci</option>
-            <option value="year">Cette année</option>
-          </select>
-          <button class="export-btn" onclick="dashExport()">Exporter ↓</button>
-        </div>
-      </div>
-
-      <!-- ── TAB: VUE D'ENSEMBLE ── -->
-      <div class="dash-tab" id="tab-overview">
-        <div class="kpi-grid">
-          <div class="kpi-card c1">
-            <div class="kpi-label">Parties jouées</div>
-            <div class="kpi-val">1 847</div>
-            <div class="kpi-delta up">↑ +23% vs mois préc.</div>
-            <div class="kpi-sub">61,5 / jour en moyenne</div>
-          </div>
-          <div class="kpi-card c2">
-            <div class="kpi-label">Goodies distribués</div>
-            <div class="kpi-val">312</div>
-            <div class="kpi-delta up">↑ +18% vs mois préc.</div>
-            <div class="kpi-sub">Taux de gain : 16,9 %</div>
-          </div>
-          <div class="kpi-card c3">
-            <div class="kpi-label">Taux de retour client</div>
-            <div class="kpi-val">87%</div>
-            <div class="kpi-delta up">↑ +5 pts vs mois préc.</div>
-            <div class="kpi-sub">Dans les 15 jours</div>
-          </div>
-          <div class="kpi-card c4">
-            <div class="kpi-label">Uplift panier moyen</div>
-            <div class="kpi-val">+2,40€</div>
-            <div class="kpi-delta up">↑ estimé sur joueurs</div>
-            <div class="kpi-sub">vs clients sans jeton</div>
-          </div>
-        </div>
-        <div class="charts-row">
-          <div class="chart-card">
-            <div class="chart-card-header">
-              <h3>Parties jouées / jour (semaine en cours)</h3>
-              <span id="chart-period-label">S4 — 18–24 mars</span>
-            </div>
-            <div class="bar-chart" id="bar-chart-main">
-              <div class="bar-wrap"><div class="bar" style="height:50px;background:#8AAFC4;opacity:.7;"></div><div class="bar-label">Lu</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:58px;background:#8AAFC4;opacity:.75;"></div><div class="bar-label">Ma</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:72px;background:#8AAFC4;opacity:.8;"></div><div class="bar-label">Me</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:66px;background:#8AAFC4;opacity:.75;"></div><div class="bar-label">Je</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:80px;background:#8AAFC4;"></div><div class="bar-label">Ve</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:92px;background:#C8A96E;"></div><div class="bar-label" style="color:var(--accent);font-weight:600">Sa ↑</div></div>
-              <div class="bar-wrap"><div class="bar" style="height:76px;background:#8AAFC4;opacity:.8;"></div><div class="bar-label">Di</div></div>
-            </div>
-            <div style="font-size:.72rem;color:var(--muted);margin-top:12px;">Pic le samedi · record à 92 parties en une journée</div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-header"><h3>Répartition des gains</h3><span>Ce mois</span></div>
-            <div class="donut-wrap">
-              <svg class="donut-svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#EAE6E0" stroke-width="14"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#C8A96E" stroke-width="14" stroke-dasharray="95 131" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#8AAFC4" stroke-width="14" stroke-dasharray="63 163" stroke-dashoffset="-95" transform="rotate(-90 50 50)"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#A8C4A2" stroke-width="14" stroke-dasharray="41 185" stroke-dashoffset="-158" transform="rotate(-90 50 50)"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#D4A8A0" stroke-width="14" stroke-dasharray="27 199" stroke-dashoffset="-199" transform="rotate(-90 50 50)"/>
-                <text x="50" y="46" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1714">312</text>
-                <text x="50" y="58" text-anchor="middle" font-size="7.5" fill="#9A9490">goodies</text>
-              </svg>
-              <div class="donut-legend">
-                <div class="legend-item"><div class="legend-dot" style="background:#C8A96E;"></div><span class="legend-name">Café offert</span><span class="legend-pct">42%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#8AAFC4;"></div><span class="legend-name">Viennoiserie</span><span class="legend-pct">28%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#A8C4A2;"></div><span class="legend-name">Carte fidélité</span><span class="legend-pct">18%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#D4A8A0;"></div><span class="legend-name">Jackpot</span><span class="legend-pct">12%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bottom-row">
-          <div class="chart-card">
-            <div class="chart-card-header"><h3>Activité récente</h3><span>Aujourd'hui</span></div>
-            <div class="activity-feed">
-              <div class="activity-item">
-                <div class="activity-icon" style="background:#FEF3E2;">🏆</div>
-                <div class="activity-text"><strong>Jackpot déclenché !</strong><small>Cliente #1842 — Café + viennoiserie offerts</small></div>
-                <div class="activity-time">Il y a 8 min</div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon" style="background:#EAF5ED;">🎁</div>
-                <div class="activity-text"><strong>Goodie distribué</strong><small>Café offert · Client régulier (+12 visites)</small></div>
-                <div class="activity-time">Il y a 23 min</div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon" style="background:#EAF0F8;">⭐</div>
-                <div class="activity-text"><strong>Avis Google collecté</strong><small>Client #1840 a laissé 5 étoiles avant de jouer</small></div>
-                <div class="activity-time">Il y a 41 min</div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon" style="background:#F5EAF0;">📈</div>
-                <div class="activity-text"><strong>Record journalier battu !</strong><small>78 parties jouées hier — +27% vs moyenne</small></div>
-                <div class="activity-time">Hier 21:00</div>
-              </div>
-            </div>
-          </div>
-          <div class="goal-card">
-            <div class="chart-card-header"><h3>Objectifs du mois</h3><span>Mars 2026</span></div>
-            <div class="goal-item">
-              <div class="goal-header"><span class="goal-name">Parties jouées (cible : 2 000)</span><span class="goal-pct">92%</span></div>
-              <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:92%;background:linear-gradient(90deg,#C8A96E,#D4B87E);"></div></div>
-            </div>
-            <div class="goal-item">
-              <div class="goal-header"><span class="goal-name">Taux retour client (cible : 90%)</span><span class="goal-pct" style="color:#8AAFC4;">87%</span></div>
-              <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:87%;background:linear-gradient(90deg,#8AAFC4,#9ABFD4);"></div></div>
-            </div>
-            <div class="goal-item">
-              <div class="goal-header"><span class="goal-name">Goodies distribués (cible : 300)</span><span class="goal-pct" style="color:#A8C4A2;">104%</span></div>
-              <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:100%;background:linear-gradient(90deg,#A8C4A2,#B8D4B2);"></div></div>
-            </div>
-            <div style="margin-top:20px;padding:14px 16px;background:#FAF8F5;border-radius:12px;font-size:.8rem;">
-              <strong style="display:block;margin-bottom:4px;">💡 Recommandation IA</strong>
-              <span style="color:var(--muted);line-height:1.5;">Activez un boost +15% le vendredi soir — votre créneau 17h–20h peut passer de <em>Creux</em> à <em>Actif</em> avec un seul ajustement.</span>
-            </div>
-          </div>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- ── TAB: MES BORNES ── -->
-      <div class="dash-tab" id="tab-bornes" style="display:none;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-          <div class="kpi-card c1" style="grid-column:span 2;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div class="kpi-label">Borne principale</div>
-              <div class="kpi-val" style="font-size:1.4rem;margin-bottom:4px;">Café Lumière · Bleu glacier</div>
-              <div style="font-size:.8rem;color:var(--muted);">N° série : IMO-2024-0047 · Installée le 12 jan. 2025</div>
-            </div>
-            <div style="text-align:right;">
-              <span class="status-badge badge-active" style="font-size:.82rem;padding:6px 16px;">● En ligne</span>
-              <div style="font-size:.72rem;color:var(--muted);margin-top:8px;">Uptime 30j : 99,2%</div>
-            </div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
-          <div class="kpi-card c1"><div class="kpi-label">Parties aujourd'hui</div><div class="kpi-val">38</div><div class="kpi-sub">Objectif journalier : 60</div></div>
-          <div class="kpi-card c2"><div class="kpi-label">Jetons restants</div><div class="kpi-val">142</div><div class="kpi-sub">Rechargé il y a 3j</div></div>
-          <div class="kpi-card c3"><div class="kpi-label">Goodies en stock</div><div class="kpi-val">67</div><div class="kpi-sub" style="color:#C4756A;">⚠ Réassort sous 5j</div></div>
-          <div class="kpi-card c4"><div class="kpi-label">Dernière partie</div><div class="kpi-val" style="font-size:1.4rem;">14:28</div><div class="kpi-sub">Il y a 4 min</div></div>
-        </div>
-        <div class="table-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3>Historique des sessions (7 derniers jours)</h3>
-            <span style="font-size:.76rem;color:var(--muted);">494 parties au total</span>
-          </div>
-          <table>
-            <thead><tr><th>Date</th><th>Parties</th><th>Taux gain</th><th>Pic horaire</th><th>Avis collectés</th><th>Statut</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Mar 25</strong></td><td>38 <span style="font-size:.72rem;color:var(--muted);">(en cours)</span></td><td>15,8%</td><td>10h–12h</td><td>6</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-              <tr><td><strong>Mar 24</strong></td><td>92</td><td>17,4%</td><td>14h–16h</td><td>14</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-              <tr><td><strong>Mar 23</strong></td><td>76</td><td>16,1%</td><td>09h–11h</td><td>11</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-              <tr><td><strong>Mar 22</strong></td><td>80</td><td>18,2%</td><td>11h–13h</td><td>13</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-              <tr><td><strong>Mar 21</strong></td><td>66</td><td>15,0%</td><td>08h–10h</td><td>9</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-              <tr><td><strong>Mar 20</strong></td><td>58</td><td>13,8%</td><td>17h–19h</td><td>7</td><td><span class="status-badge badge-pause">Creux</span></td></tr>
-              <tr><td><strong>Mar 19</strong></td><td>50</td><td>14,0%</td><td>12h–14h</td><td>8</td><td><span class="status-badge badge-active">Actif</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="padding:20px 24px;background:white;border-radius:16px;border:1px solid #EAE6E0;font-size:.84rem;display:flex;gap:16px;align-items:center;">
-          <span style="font-size:1.4rem;">🔔</span>
-          <div><strong>Alertes borne</strong><br><span style="color:var(--muted);">Stock goodies sous le seuil d'alerte (67 unités) · Réassort recommandé avant le <strong>30 mars</strong></span></div>
-          <button onclick="showToast('Commande de réassort envoyée ✓')" style="margin-left:auto;padding:9px 18px;background:var(--ink);color:white;border:none;border-radius:10px;font-size:.8rem;cursor:pointer;">Commander →</button>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- ── TAB: GOODIES ── -->
-      <div class="dash-tab" id="tab-goodies" style="display:none;">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
-          <div class="kpi-card c1"><div class="kpi-label">Goodies distribués (mois)</div><div class="kpi-val">312</div><div class="kpi-delta up">↑ +18% vs mois préc.</div></div>
-          <div class="kpi-card c2"><div class="kpi-label">Coût moyen par goodie</div><div class="kpi-val">1,20€</div><div class="kpi-sub">Pour 312 distribués = 374€</div></div>
-          <div class="kpi-card c3"><div class="kpi-label">CA additionnel généré</div><div class="kpi-val">+2 840€</div><div class="kpi-sub">ROI goodies : × 7,6</div></div>
-        </div>
-        <div class="table-card" style="margin-bottom:24px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3>Inventaire goodies</h3>
-            <button onclick="showToast('Commande de réassort envoyée ✓')" style="padding:8px 16px;background:var(--ink);color:white;border:none;border-radius:10px;font-size:.78rem;cursor:pointer;">+ Commander</button>
-          </div>
-          <table>
-            <thead><tr><th>Goodie</th><th>En stock</th><th>Distribués (mois)</th><th>% des gains</th><th>Popularité</th><th>Statut stock</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><strong>☕ Café offert</strong></td><td>24</td><td>131</td><td>42%</td>
-                <td><div class="mini-bar-wrap"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:100%;background:#C8A96E;"></div></div></div></td>
-                <td><span class="status-badge" style="background:#FFF4E6;color:#B5750A;">⚠ Faible</span></td>
-              </tr>
-              <tr>
-                <td><strong>🥐 Viennoiserie</strong></td><td>18</td><td>87</td><td>28%</td>
-                <td><div class="mini-bar-wrap"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:67%;background:#8AAFC4;"></div></div></div></td>
-                <td><span class="status-badge" style="background:#FFF4E6;color:#B5750A;">⚠ Faible</span></td>
-              </tr>
-              <tr>
-                <td><strong>🎴 Carte fidélité ×2</strong></td><td>12</td><td>56</td><td>18%</td>
-                <td><div class="mini-bar-wrap"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:43%;background:#A8C4A2;"></div></div></div></td>
-                <td><span class="status-badge" style="background:#FDECEA;color:#C4756A;">🔴 Critique</span></td>
-              </tr>
-              <tr>
-                <td><strong>🏆 Jackpot surprise</strong></td><td>13</td><td>38</td><td>12%</td>
-                <td><div class="mini-bar-wrap"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:29%;background:#D4A8A0;"></div></div></div></td>
-                <td><span class="status-badge badge-active">OK</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="chart-card">
-          <div class="chart-card-header"><h3>Distribution des goodies par jour (7j)</h3><span>Toutes catégories</span></div>
-          <div class="bar-chart">
-            <div class="bar-wrap"><div class="bar" style="height:42px;background:#C8A96E;opacity:.7;"></div><div class="bar-label">Lu</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:50px;background:#C8A96E;opacity:.75;"></div><div class="bar-label">Ma</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:62px;background:#C8A96E;opacity:.8;"></div><div class="bar-label">Me</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:55px;background:#C8A96E;opacity:.75;"></div><div class="bar-label">Je</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:70px;background:#C8A96E;"></div><div class="bar-label">Ve</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:88px;background:#C8A96E;"></div><div class="bar-label" style="color:var(--accent);font-weight:600">Sa</div></div>
-            <div class="bar-wrap"><div class="bar" style="height:60px;background:#C8A96E;opacity:.8;"></div><div class="bar-label">Di</div></div>
-          </div>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- ── TAB: CLIENTS ── -->
-      <div class="dash-tab" id="tab-clients" style="display:none;">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
-          <div class="kpi-card c1"><div class="kpi-label">Clients uniques (mois)</div><div class="kpi-val">684</div><div class="kpi-delta up">↑ +12% vs mois préc.</div></div>
-          <div class="kpi-card c2"><div class="kpi-label">Clients réguliers</div><div class="kpi-val">421</div><div class="kpi-sub">+3 visites / mois</div></div>
-          <div class="kpi-card c3"><div class="kpi-label">Avis Google collectés</div><div class="kpi-val">148</div><div class="kpi-sub">Note moy. : ★ 4,8</div></div>
-          <div class="kpi-card c4"><div class="kpi-label">Abonnés Instagram</div><div class="kpi-val">+89</div><div class="kpi-sub">Depuis l'installation</div></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-          <div class="chart-card">
-            <div class="chart-card-header"><h3>Engagement demandé avant de jouer</h3><span>Ce mois</span></div>
-            <div class="donut-wrap" style="flex-direction:row;gap:28px;">
-              <svg viewBox="0 0 100 100" style="width:110px;height:110px;">
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#EAE6E0" stroke-width="14"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#C8A96E" stroke-width="14" stroke-dasharray="126 100" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
-                <circle cx="50" cy="50" r="36" fill="none" stroke="#8AAFC4" stroke-width="14" stroke-dasharray="100 126" stroke-dashoffset="-126" transform="rotate(-90 50 50)"/>
-                <text x="50" y="46" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1714">1 847</text>
-                <text x="50" y="57" text-anchor="middle" font-size="6.5" fill="#9A9490">actions</text>
-              </svg>
-              <div class="donut-legend" style="justify-content:center;">
-                <div class="legend-item"><div class="legend-dot" style="background:#C8A96E;"></div><span class="legend-name">Avis Google</span><span class="legend-pct">55%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#8AAFC4;"></div><span class="legend-name">Follow Instagram</span><span class="legend-pct">32%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#A8C4A2;"></div><span class="legend-name">Partage story</span><span class="legend-pct">13%</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-header"><h3>Nouveaux vs réguliers</h3><span>30 derniers jours</span></div>
-            <div class="bar-chart" style="height:120px;">
-              <div class="bar-wrap" style="flex-direction:column-reverse;">
-                <div style="width:100%;display:flex;flex-direction:column;gap:0;border-radius:6px;overflow:hidden;">
-                  <div style="height:80px;background:#C8A96E;"></div>
-                  <div style="height:40px;background:#8AAFC4;"></div>
-                </div>
-                <div class="bar-label">S1</div>
-              </div>
-              <div class="bar-wrap" style="flex-direction:column-reverse;">
-                <div style="width:100%;display:flex;flex-direction:column;gap:0;border-radius:6px;overflow:hidden;">
-                  <div style="height:85px;background:#C8A96E;"></div>
-                  <div style="height:45px;background:#8AAFC4;"></div>
-                </div>
-                <div class="bar-label">S2</div>
-              </div>
-              <div class="bar-wrap" style="flex-direction:column-reverse;">
-                <div style="width:100%;display:flex;flex-direction:column;gap:0;border-radius:6px;overflow:hidden;">
-                  <div style="height:90px;background:#C8A96E;"></div>
-                  <div style="height:50px;background:#8AAFC4;"></div>
-                </div>
-                <div class="bar-label">S3</div>
-              </div>
-              <div class="bar-wrap" style="flex-direction:column-reverse;">
-                <div style="width:100%;display:flex;flex-direction:column;gap:0;border-radius:6px;overflow:hidden;">
-                  <div style="height:100px;background:#C8A96E;"></div>
-                  <div style="height:36px;background:#8AAFC4;"></div>
-                </div>
-                <div class="bar-label" style="color:var(--accent);">S4↑</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:16px;margin-top:12px;font-size:.72rem;">
-              <span><span style="display:inline-block;width:10px;height:10px;background:#C8A96E;border-radius:2px;margin-right:5px;"></span>Réguliers</span>
-              <span><span style="display:inline-block;width:10px;height:10px;background:#8AAFC4;border-radius:2px;margin-right:5px;"></span>Nouveaux</span>
-            </div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3>Top clients du mois</h3>
-            <span style="font-size:.76rem;color:var(--muted);">Sur 684 clients uniques</span>
-          </div>
-          <table>
-            <thead><tr><th>Client</th><th>Visites</th><th>Parties jouées</th><th>Goodies gagnés</th><th>Dernière visite</th><th>Fidélité</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Sophie M.</strong></td><td>18</td><td>18</td><td>3</td><td>Auj. 11:42</td><td><span class="status-badge badge-active">VIP</span></td></tr>
-              <tr><td><strong>Thomas R.</strong></td><td>15</td><td>15</td><td>2</td><td>Hier</td><td><span class="status-badge badge-active">VIP</span></td></tr>
-              <tr><td><strong>Emma D.</strong></td><td>12</td><td>12</td><td>2</td><td>Auj. 09:15</td><td><span class="status-badge badge-active">Fidèle</span></td></tr>
-              <tr><td><strong>Lucas B.</strong></td><td>10</td><td>10</td><td>1</td><td>Mar 23</td><td><span class="status-badge badge-active">Fidèle</span></td></tr>
-              <tr><td><strong>Marie L.</strong></td><td>8</td><td>8</td><td>1</td><td>Mar 22</td><td><span class="status-badge badge-pause">Régulier</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- ── TAB: PERSONNALISATION ── -->
-      <div class="dash-tab" id="tab-perso" style="display:none;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div>
-            <div class="chart-card" style="margin-bottom:20px;">
-              <h3 style="font-size:.92rem;font-weight:500;margin-bottom:20px;">Identité de la borne</h3>
-              <div class="form-group">
-                <label>Nom affiché sur la borne</label>
-                <input type="text" id="perso-name" value="Café Lumière" style="padding:12px 16px;border:1.5px solid #E0DAD2;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.9rem;width:100%;box-sizing:border-box;" oninput="persoPreviewUpdate()">
-              </div>
-              <div style="margin-bottom:20px;">
-                <label style="font-size:.82rem;font-weight:500;display:block;margin-bottom:10px;">Couleur du châssis</label>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;" id="perso-colors">
-                  <div onclick="persoColor(this,'#B8CDD9','Bleu glacier')" data-color="#B8CDD9" style="width:32px;height:32px;border-radius:50%;background:#B8CDD9;cursor:pointer;border:3px solid var(--ink);transition:.2s;"></div>
-                  <div onclick="persoColor(this,'#D4A8A0','Rose poudré')" data-color="#D4A8A0" style="width:32px;height:32px;border-radius:50%;background:#D4A8A0;cursor:pointer;border:3px solid transparent;transition:.2s;"></div>
-                  <div onclick="persoColor(this,'#A8C4A2','Vert forêt')" data-color="#A8C4A2" style="width:32px;height:32px;border-radius:50%;background:#A8C4A2;cursor:pointer;border:3px solid transparent;transition:.2s;"></div>
-                  <div onclick="persoColor(this,'#C4B8D4','Lavande')" data-color="#C4B8D4" style="width:32px;height:32px;border-radius:50%;background:#C4B8D4;cursor:pointer;border:3px solid transparent;transition:.2s;"></div>
-                  <div onclick="persoColor(this,'#C8A96E','Or sablé')" data-color="#C8A96E" style="width:32px;height:32px;border-radius:50%;background:#C8A96E;cursor:pointer;border:3px solid transparent;transition:.2s;"></div>
-                  <div onclick="persoColor(this,'#2A2A2A','Noir mat')" data-color="#2A2A2A" style="width:32px;height:32px;border-radius:50%;background:#2A2A2A;cursor:pointer;border:3px solid transparent;transition:.2s;"></div>
-                </div>
-                <div id="perso-color-name" style="font-size:.74rem;color:var(--muted);margin-top:8px;">Bleu glacier</div>
-              </div>
-              <div style="margin-bottom:20px;">
-                <label style="font-size:.82rem;font-weight:500;display:block;margin-bottom:10px;">Thème des rouleaux</label>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                  <button class="perso-theme active-theme" onclick="persoTheme(this,'☕,⭐,🍀')" style="padding:7px 13px;border-radius:100px;border:1.5px solid var(--ink);background:var(--ink);color:white;font-size:.74rem;cursor:pointer;transition:.2s;">☕ Café</button>
-                  <button class="perso-theme" onclick="persoTheme(this,'🥐,⭐,🍞')" style="padding:7px 13px;border-radius:100px;border:1.5px solid #DDD;background:white;color:var(--ink);font-size:.74rem;cursor:pointer;transition:.2s;">🥐 Boulangerie</button>
-                  <button class="perso-theme" onclick="persoTheme(this,'🍷,⭐,🍽️')" style="padding:7px 13px;border-radius:100px;border:1.5px solid #DDD;background:white;color:var(--ink);font-size:.74rem;cursor:pointer;transition:.2s;">🍷 Restaurant</button>
-                  <button class="perso-theme" onclick="persoTheme(this,'🌸,⭐,💆')" style="padding:7px 13px;border-radius:100px;border:1.5px solid #DDD;background:white;color:var(--ink);font-size:.74rem;cursor:pointer;transition:.2s;">🌸 Spa</button>
-                </div>
-              </div>
-              <div style="margin-bottom:20px;">
-                <label style="font-size:.82rem;font-weight:500;display:block;margin-bottom:10px;">Action d'engagement demandée</label>
-                <select id="perso-engage" style="width:100%;padding:12px 16px;border:1.5px solid #E0DAD2;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:white;">
-                  <option>⭐ Laisser un avis Google</option>
-                  <option>📱 Suivre sur Instagram</option>
-                  <option>🔗 Partager une story</option>
-                  <option>📧 Donner son email</option>
-                  <option>🤝 Parrainer un ami</option>
-                </select>
-              </div>
-              <div style="margin-bottom:20px;">
-                <label style="font-size:.82rem;font-weight:500;display:block;margin-bottom:10px;">Probabilité de gain</label>
-                <div style="display:flex;align-items:center;gap:14px;">
-                  <input type="range" id="perso-proba" min="5" max="40" value="17" oninput="document.getElementById('perso-proba-val').textContent=this.value+'%'" style="flex:1;">
-                  <span id="perso-proba-val" style="font-weight:600;color:var(--ink);min-width:36px;">17%</span>
-                </div>
-                <div style="font-size:.72rem;color:var(--muted);margin-top:6px;">Entre 5% (rare & précieux) et 40% (généreux & fréquent)</div>
-              </div>
-              <button onclick="showToast('Configuration sauvegardée ✓')" style="padding:12px 24px;background:var(--ink);color:white;border:none;border-radius:12px;font-size:.88rem;cursor:pointer;width:100%;">Sauvegarder les modifications</button>
-            </div>
-          </div>
-          <div class="chart-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;">
-            <div style="font-size:.78rem;color:var(--muted);margin-bottom:16px;text-align:center;">Aperçu en temps réel</div>
-            <div style="width:180px;height:260px;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;" id="perso-preview-box">
-              <svg id="perso-svg" viewBox="0 0 200 300" style="width:100%;height:100%;display:block;">
-                <rect width="200" height="38" id="pv-header" fill="#9AAFC0"/>
-                <text id="pv-brand" x="100" y="15" text-anchor="middle" font-size="7" fill="white" font-weight="800" letter-spacing="2" font-family="monospace">CHANCE &amp; GOODIES</text>
-                <text id="pv-name" x="100" y="28" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)" font-family="sans-serif">Café Lumière</text>
-                <rect width="200" height="300" id="pv-bg" fill="#1a1610"/>
-                <rect x="18" y="46" width="164" height="120" rx="10" fill="#0D1830"/>
-                <rect x="22" y="50" width="156" height="112" rx="8" fill="#111E3D"/>
-                <rect x="24" y="53" width="152" height="20" rx="5" fill="#F0A030"/>
-                <text x="100" y="67" text-anchor="middle" font-size="9.5" fill="white" font-weight="bold">GAGNÉ !</text>
-                <rect x="28" y="76" width="42" height="78" rx="6" fill="#F5E8D0"/>
-                <rect x="79" y="76" width="42" height="78" rx="6" fill="#F5E8D0"/>
-                <rect x="130" y="76" width="42" height="78" rx="6" fill="#F5E8D0"/>
-                <text id="pv-e1" x="49" y="122" text-anchor="middle" font-size="28">☕</text>
-                <text id="pv-e2" x="100" y="122" text-anchor="middle" font-size="28">⭐</text>
-                <text id="pv-e3" x="151" y="122" text-anchor="middle" font-size="28">🍀</text>
-                <rect x="18" y="216" width="164" height="26" rx="6" fill="rgba(255,255,255,0.06)"/>
-                <rect id="pv-body" x="0" y="38" width="200" height="0" fill="#B8CDD9" opacity="0"/>
-                <rect x="0" y="260" width="200" height="40" fill="rgba(0,0,0,0.35)"/>
-                <text x="100" y="285" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)" font-family="sans-serif" id="pv-footer">Café Lumière</text>
-              </svg>
-            </div>
-            <div style="margin-top:20px;text-align:center;font-size:.74rem;color:var(--muted);">
-              Les modifications sont appliquées<br>à la borne en temps réel.
-            </div>
-          </div>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- ── TAB: PARAMÈTRES ── -->
-      <div class="dash-tab" id="tab-settings" style="display:none;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-          <div class="chart-card">
-            <h3 style="font-size:.92rem;font-weight:500;margin-bottom:20px;">Abonnement</h3>
-            <div style="padding:16px;background:#FAF8F5;border-radius:12px;margin-bottom:16px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div><strong style="font-size:1rem;">Plan Pro</strong><div style="font-size:.76rem;color:var(--muted);margin-top:2px;">Renouvellement le 1er avril 2026</div></div>
-                <span style="font-size:1.2rem;font-weight:600;color:var(--ink);">180€<span style="font-size:.72rem;font-weight:400;color:var(--muted);">/mois</span></span>
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:12px;font-size:.84rem;">
-              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Statut</span><span style="color:#5A9B6E;font-weight:500;">● Actif</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Borne(s) incluses</span><span>1 / 1</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Parties incluses / mois</span><span>Illimitées</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="color:var(--muted);">Support</span><span>Prioritaire</span></div>
-            </div>
-            <button onclick="showToast('Demande envoyée — notre équipe vous contacte sous 24h')" style="margin-top:20px;padding:11px 20px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:10px;font-size:.82rem;cursor:pointer;width:100%;">Changer de plan →</button>
-          </div>
-          <div class="chart-card">
-            <h3 style="font-size:.92rem;font-weight:500;margin-bottom:20px;">Notifications</h3>
-            <div style="display:flex;flex-direction:column;gap:0;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #F0EDE8;">
-                <div><div style="font-size:.84rem;font-weight:500;">Alerte stock bas</div><div style="font-size:.72rem;color:var(--muted);">Sous 20 unités restantes</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked onchange="showToast(this.checked?'Alertes stock activées ✓':'Alertes stock désactivées')"><span class="toggle-slider"></span></label>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #F0EDE8;">
-                <div><div style="font-size:.84rem;font-weight:500;">Rapport hebdomadaire</div><div style="font-size:.72rem;color:var(--muted);">Email chaque lundi matin</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked onchange="showToast(this.checked?'Rapports hebdo activés ✓':'Rapports hebdo désactivés')"><span class="toggle-slider"></span></label>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #F0EDE8;">
-                <div><div style="font-size:.84rem;font-weight:500;">Jackpot en temps réel</div><div style="font-size:.72rem;color:var(--muted);">Notification push immédiate</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked onchange="showToast(this.checked?'Notifs jackpot activées ✓':'Notifs jackpot désactivées')"><span class="toggle-slider"></span></label>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;">
-                <div><div style="font-size:.84rem;font-weight:500;">Recommandations IA</div><div style="font-size:.72rem;color:var(--muted);">Suggestions d'optimisation</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked onchange="showToast(this.checked?'Recommandations IA activées ✓':'Recommandations IA désactivées')"><span class="toggle-slider"></span></label>
-              </div>
-            </div>
-          </div>
-          <div class="chart-card">
-            <h3 style="font-size:.92rem;font-weight:500;margin-bottom:20px;">Horaires d'ouverture</h3>
-            <div style="display:flex;flex-direction:column;gap:10px;font-size:.84rem;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Lun – Ven</span><span style="font-weight:500;">07:00 – 20:00</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Samedi</span><span style="font-weight:500;">08:00 – 22:00</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="color:var(--muted);">Dimanche</span><span style="font-weight:500;">Fermé</span></div>
-            </div>
-            <button onclick="showToast('Modification des horaires enregistrée ✓')" style="margin-top:16px;padding:11px 20px;background:var(--ink);color:white;border:none;border-radius:10px;font-size:.82rem;cursor:pointer;width:100%;">Modifier les horaires</button>
-          </div>
-          <div class="chart-card">
-            <h3 style="font-size:.92rem;font-weight:500;margin-bottom:20px;">Compte &amp; accès</h3>
-            <div style="display:flex;flex-direction:column;gap:12px;font-size:.84rem;">
-              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Email</span><span>cafelumiere@email.fr</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EDE8;"><span style="color:var(--muted);">Rôle</span><span>Propriétaire</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="color:var(--muted);">Membre depuis</span><span>Jan. 2025</span></div>
-            </div>
-            <div style="display:flex;gap:10px;margin-top:16px;">
-              <button onclick="showToast('Lien de réinitialisation envoyé par email')" style="flex:1;padding:11px;border:1.5px solid #E0DAD2;background:white;border-radius:10px;font-size:.78rem;cursor:pointer;">Changer le mdp</button>
-              <button onclick="showToast('Invitation envoyée ✓')" style="flex:1;padding:11px;background:var(--ink);color:white;border:none;border-radius:10px;font-size:.78rem;cursor:pointer;">Inviter un accès</button>
-            </div>
-          </div>
-        </div>
-        <div style="height:40px;"></div>
-      </div>
-
-      <!-- Footer dashboard -->
-      <div class="dash-footer">
-        <span>© 2026 Imo — La borne qui fidélise</span>
-        <div style="display:flex;gap:20px;align-items:center;">
-          <span>Mentions légales</span>
-          <span>Confidentialité</span>
-          <a href="#" onclick="showPage('landing');return false;">← Retour au site</a>
-        </div>
-      </div>
-
-    </div><!-- /.dash-main -->
-  </div><!-- /.dash-layout -->
-</div>
 
 </div><!-- /.pages-container -->
 
@@ -1943,16 +1432,7 @@
     const target = document.getElementById(id);
     if (target) { target.classList.add('active'); target.scrollTop = 0; }
     window.scrollTo(0, 0);
-    document.body.style.overflow = (id === 'dashboard') ? 'hidden' : '';
-    // nav CTA
-    const cta = document.getElementById('nav-cta');
-    if (id === 'dashboard') {
-      cta.textContent = '← Retour au site';
-      cta.onclick = () => { showPage('landing'); return false; };
-    } else {
-      cta.textContent = 'Voir le dashboard';
-      cta.onclick = () => { showPage('dashboard'); return false; };
-    }
+    document.body.style.overflow = '';
     // mobile tab bar active state
     document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('mob-active'));
     const tab = document.querySelector(`.mob-tab[data-page="${id}"]`);
@@ -2166,9 +1646,6 @@
     </button>
     <button class="mob-tab" data-page="etudes" onclick="showPage('etudes')">
       <span class="mob-icon">📊</span>Cas clients
-    </button>
-    <button class="mob-tab" data-page="dashboard" onclick="showPage('dashboard')">
-      <span class="mob-icon">⚡</span>Dashboard
     </button>
   </div>
 </div>
