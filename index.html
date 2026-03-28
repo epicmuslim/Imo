@@ -835,15 +835,33 @@
     <!-- Hero 3D model -->
     <div class="hero-anim hero-anim-5" style="height:520px;width:100%;">
       <model-viewer
+        id="hero-model"
         src="3D/borne%203D.glb"
         alt="Borne Imo"
-        auto-rotate
         disable-zoom
-        rotation-per-second="25deg"
+        camera-orbit="0deg 75deg 105%"
         style="width:100%;height:100%;background:#FAF8F5;"
         shadow-intensity="1.2"
         exposure="1">
       </model-viewer>
+      <script>
+        (function() {
+          const mv = document.getElementById('hero-model');
+          let t = 0;
+          function animate() {
+            t += 0.012;
+            // Oscillation Y : -45° à +45°
+            const yaw = Math.sin(t) * 45;
+            // Légère oscillation Z (effet Minecraft) : monte/descend de quelques %
+            const zoom = 105 + Math.sin(t * 1.3) * 2.5;
+            // Très léger tangage vertical
+            const pitch = 75 + Math.sin(t * 0.7) * 1.8;
+            mv.cameraOrbit = `${yaw}deg ${pitch}deg ${zoom}%`;
+            requestAnimationFrame(animate);
+          }
+          mv.addEventListener('load', animate);
+        })();
+      </script>
     </div>
   </div>
 
