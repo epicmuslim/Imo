@@ -337,6 +337,10 @@
   .db-body { display:grid; grid-template-columns:1fr 1fr; }
   .db-chart-wrap { padding:18px 16px; border-right:1px solid #EAE6E0; }
   .db-chart-title { font-size:.6rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+  .db-curve-container { position:relative; }
+  .db-curve-labels { position:absolute; top:4px; left:0; right:0; display:flex; pointer-events:none; }
+  .db-curve-lbl-before { width:32%; text-align:center; font-size:9px; color:#9E9689; font-weight:500; letter-spacing:.3px; }
+  .db-curve-lbl-after { flex:1; text-align:center; font-size:9px; color:#9C6D2E; font-weight:600; letter-spacing:.3px; }
   .db-curve { width:100%; height:82px; display:block; overflow:visible; }
   .db-curve-area { fill:url(#cg); }
   .db-curve-line { fill:none; stroke:#9C6D2E; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -1106,19 +1110,33 @@
 
         <!-- Curve chart -->
         <div class="db-chart-wrap">
-          <div class="db-chart-title">Parties / mois</div>
-          <svg class="db-curve" viewBox="0 0 300 82" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#9C6D2E" stop-opacity=".22"/>
-                <stop offset="100%" stop-color="#9C6D2E" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <path class="db-curve-area" d="M0,68 C5,67 10,64 27,61 C38,59 46,55 55,53 C64,51 73,45 82,43 C91,41 100,35 109,32 C118,29 127,24 136,22 C145,20 155,19 164,17 C173,15 181,12 191,11 C200,10 209,9 218,8 C227,7 237,6 246,5 C255,5 264,8 273,10 C282,12 292,14 300,17 L300,82 L0,82 Z"/>
-            <path class="db-curve-line" d="M0,68 C5,67 10,64 27,61 C38,59 46,55 55,53 C64,51 73,45 82,43 C91,41 100,35 109,32 C118,29 127,24 136,22 C145,20 155,19 164,17 C173,15 181,12 191,11 C200,10 209,9 218,8 C227,7 237,6 246,5 C255,5 264,8 273,10 C282,12 292,14 300,17"/>
-            <circle class="db-curve-dot" cx="246" cy="5" r="3.5"/>
-          </svg>
-          <div class="db-chart-labels" style="padding-left:0;">
+          <div class="db-chart-title">Avis positifs / mois</div>
+          <div class="db-curve-container">
+            <!-- Labels avant/après -->
+            <div class="db-curve-labels">
+              <span class="db-curve-lbl-before">Sans Imo</span>
+              <span class="db-curve-lbl-after">Avec Imo ✓</span>
+            </div>
+            <svg class="db-curve" viewBox="0 0 300 80" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9C6D2E" stop-opacity=".28"/>
+                  <stop offset="100%" stop-color="#9C6D2E" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Zone "sans Imo" -->
+              <rect x="0" y="0" width="96" height="80" fill="#EDEBE7" opacity=".55"/>
+              <!-- Ligne séparatrice -->
+              <line x1="96" y1="0" x2="96" y2="80" stroke="#C8C3BB" stroke-width="1.2" stroke-dasharray="3,2.5"/>
+              <!-- Area fill -->
+              <path class="db-curve-area" d="M0,72 C9,72 18,72 27,72 C36,72 46,72 55,71 C64,71 73,71 82,71 C89,71 92,71 96,70 C102,69 112,65 124,58 C136,51 148,42 164,32 C178,23 191,17 205,13 C218,10 232,8 246,7 C260,6 273,6 300,6 L300,80 L0,80 Z"/>
+              <!-- Courbe -->
+              <path class="db-curve-line" d="M0,72 C9,72 18,72 27,72 C36,72 46,72 55,71 C64,71 73,71 82,71 C89,71 92,71 96,70 C102,69 112,65 124,58 C136,51 148,42 164,32 C178,23 191,17 205,13 C218,10 232,8 246,7 C260,6 273,6 300,6"/>
+              <!-- Dot final -->
+              <circle class="db-curve-dot" cx="300" cy="6" r="3"/>
+            </svg>
+          </div>
+          <div class="db-chart-labels">
             <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
             <span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span>
             <span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
