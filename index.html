@@ -299,6 +299,8 @@
   .dash-mob-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
   /* ── DASHBOARD BLOCKS ── */
   .dash-blocks { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+  .dash-screenshot-wrap { margin-top:-20px; display:flex; justify-content:flex-end; padding-right:2%; }
+  .dash-screenshot-img { width:62%; max-width:600px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.16); border:1px solid #EAE6E0; transform:rotate(1deg) translateY(12px); pointer-events:none; user-select:none; }
 
   /* ── SIMULATOR ── */
   .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
@@ -709,6 +711,8 @@
     .how-arrow { padding: 0; transform: rotate(90deg); height: 28px; font-size: 1.2rem; }
     /* dash blocks */
     .dash-blocks { grid-template-columns: 1fr; }
+    .dash-screenshot-wrap { margin-top:24px; justify-content:center; padding-right:0; }
+    .dash-screenshot-img { width:90%; max-width:100%; border-radius:14px; transform:none; box-shadow:0 10px 32px rgba(0,0,0,.13); }
     /* impact */
     .impact-section { margin: 0 16px 48px; padding: 40px 24px; }
     .impact-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -965,8 +969,8 @@
     </div>
 
     <!-- Screenshot dashboard — après les blocs, décalé bas droite -->
-    <div class="reveal reveal-d3" style="margin-top:-20px;display:flex;justify-content:flex-end;padding-right:2%;">
-      <img src="image/Dashboard.png" alt="Dashboard Imo" style="width:62%;max-width:600px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.16);border:1px solid #EAE6E0;transform:rotate(1deg) translateY(12px);pointer-events:none;user-select:none;">
+    <div class="dash-screenshot-wrap reveal reveal-d3">
+      <img class="dash-screenshot-img" src="image/Dashboard.png" alt="Dashboard Imo">
     </div>
 
   </section>
