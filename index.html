@@ -318,6 +318,7 @@
   .dash-blocks { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
   .dash-screenshot-wrap { margin-top:-20px; display:flex; justify-content:flex-end; padding-right:2%; }
   .dash-screenshot-img { width:62%; max-width:600px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.16); border:1px solid #EAE6E0; transform:rotate(1deg) translateY(12px); pointer-events:none; user-select:none; }
+  .dash-screen-mobile { display: none; }
 
   /* ── SIMULATOR ── */
   .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
@@ -748,8 +749,9 @@
     .how-arrow { padding: 0; transform: rotate(90deg); height: 28px; font-size: 1.2rem; }
     /* dash blocks */
     .dash-blocks { grid-template-columns: 1fr; }
-    .dash-screenshot-wrap { margin-top:24px; justify-content:center; padding-right:0; }
-    .dash-screenshot-img { width:90%; max-width:100%; border-radius:14px; transform:none; box-shadow:0 10px 32px rgba(0,0,0,.13); }
+    .dash-screenshot-wrap { display: none; }
+    .dash-screen-mobile { display: block; margin: 0 -24px; overflow: hidden; padding: 8px 0; }
+    .dash-screen-mobile-img { width: 96%; border-radius: 16px; box-shadow: 0 14px 44px rgba(0,0,0,.18); border: 1px solid #EAE6E0; transform: rotate(-3.5deg) translateX(4%); pointer-events: none; user-select: none; display: block; }
     /* impact */
     .impact-section { margin: 0 16px 48px; padding: 40px 24px; }
     .impact-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -1028,6 +1030,11 @@
           <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Parties jouées, avis collectés, taux de retour, uplift panier — toutes vos métriques centralisées et exportables en un clic.</div>
         </div>
       </div>
+      <!-- Screenshot intercalé mobile uniquement -->
+      <div class="dash-screen-mobile">
+        <img src="image/dashboard%20v3.png" alt="Dashboard Imo" class="dash-screen-mobile-img">
+      </div>
+
       <div style="padding:24px 28px;background:white;border-radius:16px;border:1px solid #EAE6E0;display:flex;gap:16px;align-items:flex-start;">
         <span style="font-size:1.5rem;flex-shrink:0;">🤖</span>
         <div>
