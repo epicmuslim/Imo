@@ -318,25 +318,33 @@
   .dash-screenshot-wrap { margin-top:-20px; display:flex; justify-content:flex-end; padding-right:2%; }
   .dash-screenshot-img { width:62%; max-width:600px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.16); border:1px solid #EAE6E0; transform:rotate(1deg) translateY(12px); pointer-events:none; user-select:none; }
   .dash-screen-mobile { display: none; }
-  .db-preview { background:white; border:1px solid #EAE6E0; border-radius:20px; padding:28px; margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:28px; box-shadow:0 6px 28px rgba(0,0,0,.06); }
-  .db-features { display:flex; flex-direction:column; gap:10px; }
-  .db-feature { display:flex; align-items:center; gap:10px; font-size:.84rem; font-weight:500; color:var(--ink); }
-  .db-feature.db-off { color:var(--muted); }
-  .db-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .db-preview { background:white; border:1px solid #D8D3CB; border-radius:20px; padding:28px; margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:28px; box-shadow:0 6px 0 #C8C3BB, 0 10px 32px rgba(0,0,0,.08); }
+  /* feature tabs */
+  .db-features { display:flex; flex-direction:column; gap:9px; justify-content:center; }
+  .db-tab { display:flex; align-items:center; gap:10px; font-size:.82rem; font-weight:500; color:var(--ink); background:white; border:1px solid #D8D3CB; border-radius:100px; padding:9px 16px; box-shadow:0 3px 0 #C8C3BB; transition:box-shadow .15s, transform .15s; cursor:default; user-select:none; }
+  .db-tab.db-tab-off { color:#A8A39C; background:#F7F5F2; box-shadow:0 2px 0 #D8D3CB; }
+  .db-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
   .db-dot-on { background:var(--ink); }
-  .db-dot-off { background:#D8D3CB; }
-  .db-bottom { display:flex; flex-direction:column; gap:16px; }
-  .db-chart { flex:1; }
-  .db-bars { display:flex; align-items:flex-end; gap:4px; height:80px; }
-  .db-bar { flex:1; background:#E8E3DA; border-radius:3px 3px 0 0; transition:background .2s; }
-  .db-bar:hover { background:var(--ink); }
-  .db-chart-labels { display:flex; gap:4px; margin-top:4px; }
-  .db-chart-labels span { flex:1; font-size:.48rem; color:var(--muted); text-align:center; }
-  .db-kpis { display:flex; flex-direction:column; gap:8px; }
-  .db-kpi { display:flex; align-items:center; gap:10px; background:#F7F5F2; border-radius:10px; padding:8px 12px; }
-  .db-kpi-icon { font-size:.7rem; font-weight:700; color:white; background:var(--ink); width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Sans',sans-serif; }
-  .db-kpi-val { font-size:.82rem; font-weight:700; color:var(--ink); line-height:1.1; }
-  .db-kpi-lbl { font-size:.62rem; color:var(--muted); }
+  .db-dot-off { background:#C8C3BB; border:1.5px solid #C8C3BB; }
+  /* chart */
+  .db-bottom { display:flex; flex-direction:column; gap:14px; }
+  .db-chart-inner { position:relative; height:90px; }
+  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; }
+  .db-gridline { border-top:1px solid #EAE6E0; position:relative; }
+  .db-gridline span { position:absolute; left:0; top:-9px; font-size:.45rem; color:#B0AAA3; }
+  .db-bars { position:absolute; bottom:0; left:20px; right:0; display:flex; align-items:flex-end; gap:3px; height:100%; }
+  .db-bar { flex:1; background:var(--ink); border-radius:2px 2px 0 0; opacity:.85; transition:opacity .2s; }
+  .db-bar:hover { opacity:1; }
+  .db-chart-labels { display:flex; gap:3px; padding-left:20px; margin-top:3px; }
+  .db-chart-labels span { flex:1; font-size:.44rem; color:var(--muted); text-align:center; }
+  /* KPIs */
+  .db-kpis { display:flex; flex-direction:column; gap:7px; }
+  .db-kpi { display:flex; align-items:center; gap:10px; background:#F7F5F2; border:1px solid #EAE6E0; border-radius:10px; padding:7px 12px; }
+  .db-kpi-icon { font-size:.68rem; font-weight:700; color:white; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Sans',sans-serif; }
+  .db-kpi-g { background:#4285F4; }
+  .db-kpi-s { background:#2D9B57; }
+  .db-kpi-p { background:var(--ink); font-size:.75rem; }
+  .db-kpi-val { font-size:.84rem; font-weight:700; color:var(--ink); }
 
   /* ── SIMULATOR ── */
   .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
@@ -1033,30 +1041,38 @@
     <!-- Dashboard preview -->
     <div class="db-preview reveal reveal-d3">
 
-      <!-- Feature list -->
+      <!-- Feature tabs -->
       <div class="db-features">
-        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Gestion autonome</div>
-        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Suivi des résultats en temps réel</div>
-        <div class="db-feature db-off"><span class="db-dot db-dot-off"></span>CRM intégré</div>
-        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Assistance instantanée</div>
+        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Gestion autonome</div>
+        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Suivi des résultats en temps réel</div>
+        <div class="db-tab db-tab-off"><span class="db-dot db-dot-off"></span>CRM intégré</div>
+        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Assistance instantanée</div>
       </div>
 
       <!-- Chart + KPIs -->
       <div class="db-bottom">
         <div class="db-chart">
-          <div class="db-bars">
-            <div class="db-bar" style="height:38%"></div>
-            <div class="db-bar" style="height:50%"></div>
-            <div class="db-bar" style="height:44%"></div>
-            <div class="db-bar" style="height:56%"></div>
-            <div class="db-bar" style="height:62%"></div>
-            <div class="db-bar" style="height:71%"></div>
-            <div class="db-bar" style="height:66%"></div>
-            <div class="db-bar" style="height:78%"></div>
-            <div class="db-bar" style="height:84%"></div>
-            <div class="db-bar" style="height:95%"></div>
-            <div class="db-bar" style="height:88%"></div>
-            <div class="db-bar" style="height:72%"></div>
+          <div class="db-chart-inner">
+            <div class="db-grid">
+              <div class="db-gridline"><span>10k</span></div>
+              <div class="db-gridline"><span>7.5k</span></div>
+              <div class="db-gridline"><span>5k</span></div>
+              <div class="db-gridline"><span>2.5k</span></div>
+            </div>
+            <div class="db-bars">
+              <div class="db-bar" style="height:38%"></div>
+              <div class="db-bar" style="height:50%"></div>
+              <div class="db-bar" style="height:44%"></div>
+              <div class="db-bar" style="height:56%"></div>
+              <div class="db-bar" style="height:62%"></div>
+              <div class="db-bar" style="height:71%"></div>
+              <div class="db-bar" style="height:66%"></div>
+              <div class="db-bar" style="height:78%"></div>
+              <div class="db-bar" style="height:84%"></div>
+              <div class="db-bar" style="height:95%"></div>
+              <div class="db-bar" style="height:88%"></div>
+              <div class="db-bar" style="height:72%"></div>
+            </div>
           </div>
           <div class="db-chart-labels">
             <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
@@ -1065,12 +1081,11 @@
           </div>
         </div>
         <div class="db-kpis">
-          <div class="db-kpi"><span class="db-kpi-icon">G</span><div><div class="db-kpi-val">2 167</div><div class="db-kpi-lbl">avis Google</div></div></div>
-          <div class="db-kpi"><span class="db-kpi-icon">€</span><div><div class="db-kpi-val">+440 €</div><div class="db-kpi-lbl">rev. moyen/mois</div></div></div>
-          <div class="db-kpi"><span class="db-kpi-icon">🎰</span><div><div class="db-kpi-val">+332</div><div class="db-kpi-lbl">parties jouées</div></div></div>
+          <div class="db-kpi"><span class="db-kpi-icon db-kpi-g">G</span><span class="db-kpi-val">2 167</span></div>
+          <div class="db-kpi"><span class="db-kpi-icon db-kpi-s">$</span><span class="db-kpi-val">+440 €</span></div>
+          <div class="db-kpi"><span class="db-kpi-icon db-kpi-p">🎰</span><span class="db-kpi-val">+332</span></div>
         </div>
       </div>
-
     </div>
 
         <!-- Screenshot dashboard — après les blocs, décalé bas droite -->
