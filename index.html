@@ -1767,16 +1767,21 @@
       return;
     }
     const joursOuvrables = 22;
-    const joueursMois = Math.round(clients * 0.78) * joursOuvrables;
-    const avisMois = clients * joursOuvrables;
-    const nouveauxMois = Math.round(joueursMois * 0.18);
-    const caMois = Math.round(joueursMois * 0.87 * 0.52 * panier);
+    // 45% des clients jouent, 62% de ceux qui jouent laissent un avis
+    const joueursMois = Math.round(clients * 0.45) * joursOuvrables;
+    const avisMois = Math.round(joueursMois * 0.62);
+    // 7% des avis génèrent un nouveau client via bouche-à-oreille
+    const nouveauxMois = Math.round(avisMois * 0.07);
+    // CA additionnel = nouveaux clients × panier × ~1.5 visites en moyenne
+    const caMois = Math.round(nouveauxMois * panier * 1.5);
 
     document.getElementById('roi-avis').textContent = avisMois.toLocaleString('fr-FR');
     document.getElementById('roi-nouveaux').textContent = nouveauxMois.toLocaleString('fr-FR');
     document.getElementById('roi-ca').textContent = '+' + caMois.toLocaleString('fr-FR') + '€';
+    const abonnement = 180;
+    const roiDelai = caMois >= abonnement ? 'dès le 1er mois' : caMois >= abonnement / 2 ? 'en 2 à 3 mois' : 'en quelques mois';
     document.getElementById('roi-summary').innerHTML =
-      `Avec <strong>${clients} clients/jour</strong> et un panier de <strong>${panier}€</strong>, Imo vous génère <strong>${avisMois.toLocaleString('fr-FR')} avis Google/mois</strong>, attire <strong>${nouveauxMois} nouveaux clients/mois</strong> et représente <strong>+${caMois.toLocaleString('fr-FR')}€ de CA additionnel mensuel</strong>. Pour un abonnement à 180€/mois, le ROI est atteint en moins de 30 jours.`;
+      `Avec <strong>${clients} clients/jour</strong> et un panier de <strong>${panier}€</strong>, Imo vous génère environ <strong>${avisMois.toLocaleString('fr-FR')} avis Google/mois</strong>, attire <strong>${nouveauxMois} nouveaux clients/mois</strong> et représente <strong>+${caMois.toLocaleString('fr-FR')}€ de CA additionnel mensuel</strong>. Pour un abonnement à 180€/mois, le ROI est atteint <strong>${roiDelai}</strong>.`;
 
     const res = document.getElementById('roi-results');
     res.style.display = 'block';
