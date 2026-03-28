@@ -314,11 +314,29 @@
     white-space: nowrap;
   }
   .dash-mob-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-  /* ── DASHBOARD BLOCKS ── */
-  .dash-blocks { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+  /* ── DASHBOARD PREVIEW ── */
   .dash-screenshot-wrap { margin-top:-20px; display:flex; justify-content:flex-end; padding-right:2%; }
   .dash-screenshot-img { width:62%; max-width:600px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.16); border:1px solid #EAE6E0; transform:rotate(1deg) translateY(12px); pointer-events:none; user-select:none; }
   .dash-screen-mobile { display: none; }
+  .db-preview { background:white; border:1px solid #EAE6E0; border-radius:20px; padding:28px; margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:28px; box-shadow:0 6px 28px rgba(0,0,0,.06); }
+  .db-features { display:flex; flex-direction:column; gap:10px; }
+  .db-feature { display:flex; align-items:center; gap:10px; font-size:.84rem; font-weight:500; color:var(--ink); }
+  .db-feature.db-off { color:var(--muted); }
+  .db-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .db-dot-on { background:var(--ink); }
+  .db-dot-off { background:#D8D3CB; }
+  .db-bottom { display:flex; flex-direction:column; gap:16px; }
+  .db-chart { flex:1; }
+  .db-bars { display:flex; align-items:flex-end; gap:4px; height:80px; }
+  .db-bar { flex:1; background:#E8E3DA; border-radius:3px 3px 0 0; transition:background .2s; }
+  .db-bar:hover { background:var(--ink); }
+  .db-chart-labels { display:flex; gap:4px; margin-top:4px; }
+  .db-chart-labels span { flex:1; font-size:.48rem; color:var(--muted); text-align:center; }
+  .db-kpis { display:flex; flex-direction:column; gap:8px; }
+  .db-kpi { display:flex; align-items:center; gap:10px; background:#F7F5F2; border-radius:10px; padding:8px 12px; }
+  .db-kpi-icon { font-size:.7rem; font-weight:700; color:white; background:var(--ink); width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Sans',sans-serif; }
+  .db-kpi-val { font-size:.82rem; font-weight:700; color:var(--ink); line-height:1.1; }
+  .db-kpi-lbl { font-size:.62rem; color:var(--muted); }
 
   /* ── SIMULATOR ── */
   .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
@@ -747,11 +765,9 @@
     .how-flow { grid-template-columns: 1fr; gap: 0; }
     .how-step { padding: 24px; }
     .how-arrow { padding: 0; transform: rotate(90deg); height: 28px; font-size: 1.2rem; }
-    /* dash blocks */
-    .dash-blocks { grid-template-columns: 1fr; }
+    /* dash preview */
+    .db-preview { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
     .dash-screenshot-wrap { display: none; }
-    .dash-screen-mobile { display: flex; justify-content: center; padding: 8px 0; overflow: visible; }
-    .dash-screen-mobile-img { width: 82%; border-radius: 16px; box-shadow: 0 14px 44px rgba(0,0,0,.18); border: 1px solid #EAE6E0; transform: rotate(-3.5deg); pointer-events: none; user-select: none; display: block; }
     /* impact */
     .impact-section { margin: 0 16px 48px; padding: 40px 24px; }
     .impact-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -1014,37 +1030,50 @@
       <p style="font-size:.88rem;color:var(--muted);max-width:480px;line-height:1.65;">Configurez, suivez et optimisez votre borne à distance — en temps réel, depuis n'importe quel appareil.</p>
     </div>
 
-    <!-- 3 feature cards -->
-    <div class="dash-blocks reveal reveal-d3" style="margin-top:28px;">
-      <div style="padding:24px 28px;background:white;border-radius:16px;border:1px solid #EAE6E0;display:flex;gap:16px;align-items:flex-start;">
-        <span style="font-size:1.5rem;flex-shrink:0;">🖥️</span>
-        <div>
-          <div style="font-weight:600;font-size:.88rem;margin-bottom:4px;">Gestion complète</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Pilotez votre borne à distance, gérez vos goodies, suivez vos objectifs et personnalisez l'expérience — tout depuis un seul tableau de bord.</div>
-        </div>
-      </div>
-      <div style="padding:24px 28px;background:white;border-radius:16px;border:1px solid #EAE6E0;display:flex;gap:16px;align-items:flex-start;">
-        <span style="font-size:1.5rem;flex-shrink:0;">📊</span>
-        <div>
-          <div style="font-weight:600;font-size:.88rem;margin-bottom:4px;">Suivi & données en temps réel</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Parties jouées, avis collectés, taux de retour, uplift panier — toutes vos métriques centralisées et exportables en un clic.</div>
-        </div>
-      </div>
-      <!-- Screenshot intercalé mobile uniquement -->
-      <div class="dash-screen-mobile">
-        <img src="image/dashboard%20v3.png" alt="Dashboard Imo" class="dash-screen-mobile-img">
+    <!-- Dashboard preview -->
+    <div class="db-preview reveal reveal-d3">
+
+      <!-- Feature list -->
+      <div class="db-features">
+        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Gestion autonome</div>
+        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Suivi des résultats en temps réel</div>
+        <div class="db-feature db-off"><span class="db-dot db-dot-off"></span>CRM intégré</div>
+        <div class="db-feature db-on"><span class="db-dot db-dot-on"></span>Assistance instantanée</div>
       </div>
 
-      <div style="padding:24px 28px;background:white;border-radius:16px;border:1px solid #EAE6E0;display:flex;gap:16px;align-items:flex-start;">
-        <span style="font-size:1.5rem;flex-shrink:0;">🤖</span>
-        <div>
-          <div style="font-weight:600;font-size:.88rem;margin-bottom:4px;">Recommandations IA</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Notre IA analyse vos données et vous suggère les ajustements optimaux — horaires de boost, probabilité de gain, mix goodies — pour maximiser votre ROI en continu.</div>
+      <!-- Chart + KPIs -->
+      <div class="db-bottom">
+        <div class="db-chart">
+          <div class="db-bars">
+            <div class="db-bar" style="height:38%"></div>
+            <div class="db-bar" style="height:50%"></div>
+            <div class="db-bar" style="height:44%"></div>
+            <div class="db-bar" style="height:56%"></div>
+            <div class="db-bar" style="height:62%"></div>
+            <div class="db-bar" style="height:71%"></div>
+            <div class="db-bar" style="height:66%"></div>
+            <div class="db-bar" style="height:78%"></div>
+            <div class="db-bar" style="height:84%"></div>
+            <div class="db-bar" style="height:95%"></div>
+            <div class="db-bar" style="height:88%"></div>
+            <div class="db-bar" style="height:72%"></div>
+          </div>
+          <div class="db-chart-labels">
+            <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
+            <span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span>
+            <span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
+          </div>
+        </div>
+        <div class="db-kpis">
+          <div class="db-kpi"><span class="db-kpi-icon">G</span><div><div class="db-kpi-val">2 167</div><div class="db-kpi-lbl">avis Google</div></div></div>
+          <div class="db-kpi"><span class="db-kpi-icon">€</span><div><div class="db-kpi-val">+440 €</div><div class="db-kpi-lbl">rev. moyen/mois</div></div></div>
+          <div class="db-kpi"><span class="db-kpi-icon">🎰</span><div><div class="db-kpi-val">+332</div><div class="db-kpi-lbl">parties jouées</div></div></div>
         </div>
       </div>
+
     </div>
 
-    <!-- Screenshot dashboard — après les blocs, décalé bas droite -->
+        <!-- Screenshot dashboard — après les blocs, décalé bas droite -->
     <div class="dash-screenshot-wrap reveal reveal-d3">
       <img class="dash-screenshot-img" src="image/dashboard%20v3.png" alt="Dashboard Imo">
     </div>
