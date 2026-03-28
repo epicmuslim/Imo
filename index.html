@@ -126,6 +126,7 @@
     color: var(--ink);
   }
   .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .hero-mobile-sub { display: none; }
   .hero-sticker {
     position: absolute; z-index: 10; pointer-events: none;
     background: white; border-radius: 14px;
@@ -724,10 +725,12 @@
     }
     .hero-label { display: none; }
     .hero-sub { display: none; }
+    .hero-mobile-sub { display: block; font-size: .88rem; color: #6b6760; line-height: 1.55; margin-bottom: 20px; max-width: 320px; margin-left: auto; margin-right: auto; }
     .hero h1 { font-size: 2.5rem; line-height: 1.06; margin-bottom: 20px; }
     .hero-actions { justify-content: center; flex-direction: column; gap: 10px; align-items: stretch; padding: 0 8px; }
     .hero-actions a { text-align: center; }
-    .hero > div:last-child { flex: 1; height: auto !important; min-height: 300px; }
+    .hero > div:last-child { flex: 1; height: 380px !important; min-height: 320px; }
+    .hero > div:last-child model-viewer { height: 100% !important; }
     .hero-sticker { padding: 8px 13px; border-radius: 11px; }
     .hero-sticker-val { font-size: .92rem; }
     .hero-sticker-label { font-size: .54rem; }
@@ -852,6 +855,7 @@
     <div>
       <div class="hero-label hero-anim hero-anim-1">Fidélisation · E-réputation · Acquisition</div>
       <h1 class="hero-anim hero-anim-2">Vos clients jouent.<br>Ils reviennent.<br><em>Ils en parlent.</em></h1>
+      <p class="hero-mobile-sub hero-anim hero-anim-3">La borne à jeton qui transforme chaque achat en avis Google, abonnement et retour client.</p>
       <p class="hero-sub hero-anim hero-anim-3">Une borne posée sur votre comptoir transforme chaque achat en expérience mémorable — et chaque client satisfait en ambassadeur.</p>
       <div class="hero-actions hero-anim hero-anim-5">
         <a href="#howit" class="btn-primary">Découvrir comment ça marche →</a>
