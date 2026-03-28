@@ -317,34 +317,57 @@
   /* ── DASHBOARD PREVIEW ── */
   .dash-screenshot-wrap { margin-top:-20px; display:flex; justify-content:flex-end; padding-right:2%; }
   .dash-screenshot-img { width:62%; max-width:600px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.16); border:1px solid #EAE6E0; transform:rotate(1deg) translateY(12px); pointer-events:none; user-select:none; }
-  .dash-screen-mobile { display: none; }
-  .db-preview { background:white; border:1px solid #D8D3CB; border-radius:20px; padding:28px; margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:28px; box-shadow:0 6px 0 #C8C3BB, 0 10px 32px rgba(0,0,0,.08); }
-  /* feature tabs */
-  .db-features { display:flex; flex-direction:column; gap:9px; justify-content:center; }
-  .db-tab { display:flex; align-items:center; gap:10px; font-size:.82rem; font-weight:500; color:var(--ink); background:white; border:1px solid #D8D3CB; border-radius:100px; padding:9px 16px; box-shadow:0 3px 0 #C8C3BB; transition:box-shadow .15s, transform .15s; cursor:default; user-select:none; }
-  .db-tab.db-tab-off { color:#A8A39C; background:#F7F5F2; box-shadow:0 2px 0 #D8D3CB; }
-  .db-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .dash-screen-mobile { display:none; }
+  /* card */
+  .db-preview { background:white; border:1px solid #D0CBC3; border-radius:24px; margin-top:36px; overflow:hidden; box-shadow:0 8px 0 #BDB8B0, 0 24px 60px rgba(0,0,0,.11); }
+  /* window header */
+  .db-header { background:#F4F1ED; border-bottom:1px solid #E4DFD8; padding:11px 18px; display:flex; align-items:center; gap:12px; }
+  .db-mac-dots { display:flex; gap:6px; }
+  .db-mac-dot { width:10px; height:10px; border-radius:50%; }
+  .db-mac-red { background:#FF5F57; }
+  .db-mac-yellow { background:#FEBC2E; }
+  .db-mac-green { background:#28C840; }
+  .db-header-title { flex:1; font-size:.68rem; font-weight:600; color:#A8A39C; text-align:center; letter-spacing:.04em; }
+  .db-live { display:flex; align-items:center; gap:5px; font-size:.62rem; font-weight:700; color:#2D9B57; text-transform:uppercase; letter-spacing:.06em; }
+  .db-live-dot { width:6px; height:6px; border-radius:50%; background:#2D9B57; animation:db-pulse 2s ease-in-out infinite; }
+  @keyframes db-pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(45,155,87,.4)} 50%{opacity:.7;box-shadow:0 0 0 4px rgba(45,155,87,0)} }
+  /* body */
+  .db-body { display:grid; grid-template-columns:1fr 1fr; }
+  /* left */
+  .db-features { padding:22px 20px; border-right:1px solid #EAE6E0; display:flex; flex-direction:column; gap:9px; justify-content:center; }
+  .db-tab { display:flex; align-items:center; gap:10px; font-size:.8rem; font-weight:500; color:var(--ink); background:white; border:1px solid #D0CBC3; border-radius:100px; padding:9px 15px; box-shadow:0 3px 0 #BDB8B0; transition:transform .12s, box-shadow .12s; cursor:default; user-select:none; }
+  .db-tab:hover { transform:translateY(-1px); box-shadow:0 4px 0 #BDB8B0; }
+  .db-tab.db-tab-off { color:#B0AAA3; background:#F7F5F2; border-color:#DDD8D1; box-shadow:0 2px 0 #CCC7C0; }
+  .db-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
   .db-dot-on { background:var(--ink); }
-  .db-dot-off { background:#C8C3BB; border:1.5px solid #C8C3BB; }
-  /* chart */
-  .db-bottom { display:flex; flex-direction:column; gap:14px; }
-  .db-chart-inner { position:relative; height:90px; }
-  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; }
-  .db-gridline { border-top:1px solid #EAE6E0; position:relative; }
-  .db-gridline span { position:absolute; left:0; top:-9px; font-size:.45rem; color:#B0AAA3; }
-  .db-bars { position:absolute; bottom:0; left:20px; right:0; display:flex; align-items:flex-end; gap:3px; height:100%; }
-  .db-bar { flex:1; background:var(--ink); border-radius:2px 2px 0 0; opacity:.85; transition:opacity .2s; }
-  .db-bar:hover { opacity:1; }
-  .db-chart-labels { display:flex; gap:3px; padding-left:20px; margin-top:3px; }
-  .db-chart-labels span { flex:1; font-size:.44rem; color:var(--muted); text-align:center; }
+  .db-dot-off { background:#C8C3BB; }
+  /* right */
+  .db-right { padding:20px 18px; display:flex; flex-direction:column; gap:14px; }
   /* KPIs */
   .db-kpis { display:flex; flex-direction:column; gap:7px; }
-  .db-kpi { display:flex; align-items:center; gap:10px; background:#F7F5F2; border:1px solid #EAE6E0; border-radius:10px; padding:7px 12px; }
-  .db-kpi-icon { font-size:.68rem; font-weight:700; color:white; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Sans',sans-serif; }
+  .db-kpi { display:flex; align-items:center; gap:10px; background:#F7F5F2; border:1px solid #EAE6E0; border-radius:11px; padding:8px 12px; }
+  .db-kpi-badge { width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:white; flex-shrink:0; font-family:'DM Sans',sans-serif; }
   .db-kpi-g { background:#4285F4; }
   .db-kpi-s { background:#2D9B57; }
   .db-kpi-p { background:var(--ink); font-size:.75rem; }
-  .db-kpi-val { font-size:.84rem; font-weight:700; color:var(--ink); }
+  .db-kpi-info { flex:1; }
+  .db-kpi-val { font-size:.88rem; font-weight:700; color:var(--ink); line-height:1; }
+  .db-kpi-lbl { font-size:.56rem; color:var(--muted); margin-top:2px; }
+  .db-kpi-trend { font-size:.58rem; font-weight:700; color:#2D9B57; background:#E6F5ED; padding:2px 7px; border-radius:100px; white-space:nowrap; }
+  /* chart */
+  .db-chart { flex:1; }
+  .db-chart-inner { position:relative; height:76px; }
+  .db-grid { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; }
+  .db-gridline { border-top:1px dashed #EAE6E0; position:relative; flex:1; }
+  .db-gridline span { position:absolute; left:0; top:-8px; font-size:.41rem; color:#C0BAB3; }
+  .db-bars { position:absolute; bottom:0; left:22px; right:0; display:flex; align-items:flex-end; gap:3px; height:100%; }
+  .db-bar { flex:1; border-radius:2px 2px 0 0; background:var(--ink); opacity:.6; transform-origin:bottom; animation:bar-grow .7s ease-out backwards; }
+  .db-bar:nth-child(10) { background:var(--accent); opacity:1; }
+  .db-bar:hover { opacity:1; }
+  .db-bar:nth-child(1){animation-delay:.04s} .db-bar:nth-child(2){animation-delay:.08s} .db-bar:nth-child(3){animation-delay:.12s} .db-bar:nth-child(4){animation-delay:.16s} .db-bar:nth-child(5){animation-delay:.20s} .db-bar:nth-child(6){animation-delay:.24s} .db-bar:nth-child(7){animation-delay:.28s} .db-bar:nth-child(8){animation-delay:.32s} .db-bar:nth-child(9){animation-delay:.36s} .db-bar:nth-child(10){animation-delay:.40s} .db-bar:nth-child(11){animation-delay:.44s} .db-bar:nth-child(12){animation-delay:.48s}
+  @keyframes bar-grow { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+  .db-chart-labels { display:flex; gap:3px; padding-left:22px; margin-top:4px; }
+  .db-chart-labels span { flex:1; font-size:.41rem; color:#B0AAA3; text-align:center; }
 
   /* ── SIMULATOR ── */
   .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
@@ -774,7 +797,9 @@
     .how-step { padding: 24px; }
     .how-arrow { padding: 0; transform: rotate(90deg); height: 28px; font-size: 1.2rem; }
     /* dash preview */
-    .db-preview { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+    .db-body { grid-template-columns: 1fr; }
+    .db-features { border-right: none; border-bottom: 1px solid #EAE6E0; padding: 16px; }
+    .db-right { padding: 16px; }
     .dash-screenshot-wrap { display: none; }
     /* impact */
     .impact-section { margin: 0 16px 48px; padding: 40px 24px; }
@@ -1041,50 +1066,78 @@
     <!-- Dashboard preview -->
     <div class="db-preview reveal reveal-d3">
 
-      <!-- Feature tabs -->
-      <div class="db-features">
-        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Gestion autonome</div>
-        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Suivi des résultats en temps réel</div>
-        <div class="db-tab db-tab-off"><span class="db-dot db-dot-off"></span>CRM intégré</div>
-        <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Assistance instantanée</div>
+      <!-- Window header -->
+      <div class="db-header">
+        <div class="db-mac-dots">
+          <div class="db-mac-dot db-mac-red"></div>
+          <div class="db-mac-dot db-mac-yellow"></div>
+          <div class="db-mac-dot db-mac-green"></div>
+        </div>
+        <div class="db-header-title">Tableau de bord Imo</div>
+        <div class="db-live"><span class="db-live-dot"></span>Live</div>
       </div>
 
-      <!-- Chart + KPIs -->
-      <div class="db-bottom">
-        <div class="db-chart">
-          <div class="db-chart-inner">
-            <div class="db-grid">
-              <div class="db-gridline"><span>10k</span></div>
-              <div class="db-gridline"><span>7.5k</span></div>
-              <div class="db-gridline"><span>5k</span></div>
-              <div class="db-gridline"><span>2.5k</span></div>
+      <!-- Body -->
+      <div class="db-body">
+
+        <!-- Left: feature tabs -->
+        <div class="db-features">
+          <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Gestion autonome</div>
+          <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Suivi des résultats en temps réel</div>
+          <div class="db-tab db-tab-off"><span class="db-dot db-dot-off"></span>CRM intégré</div>
+          <div class="db-tab db-tab-on"><span class="db-dot db-dot-on"></span>Assistance instantanée</div>
+        </div>
+
+        <!-- Right: KPIs + chart -->
+        <div class="db-right">
+          <div class="db-kpis">
+            <div class="db-kpi">
+              <span class="db-kpi-badge db-kpi-g">G</span>
+              <div class="db-kpi-info"><div class="db-kpi-val">2 167</div><div class="db-kpi-lbl">avis Google</div></div>
+              <span class="db-kpi-trend">↑ 12%</span>
             </div>
-            <div class="db-bars">
-              <div class="db-bar" style="height:38%"></div>
-              <div class="db-bar" style="height:50%"></div>
-              <div class="db-bar" style="height:44%"></div>
-              <div class="db-bar" style="height:56%"></div>
-              <div class="db-bar" style="height:62%"></div>
-              <div class="db-bar" style="height:71%"></div>
-              <div class="db-bar" style="height:66%"></div>
-              <div class="db-bar" style="height:78%"></div>
-              <div class="db-bar" style="height:84%"></div>
-              <div class="db-bar" style="height:95%"></div>
-              <div class="db-bar" style="height:88%"></div>
-              <div class="db-bar" style="height:72%"></div>
+            <div class="db-kpi">
+              <span class="db-kpi-badge db-kpi-s">$</span>
+              <div class="db-kpi-info"><div class="db-kpi-val">+440 €</div><div class="db-kpi-lbl">rev. moyen/mois</div></div>
+              <span class="db-kpi-trend">↑ 8%</span>
+            </div>
+            <div class="db-kpi">
+              <span class="db-kpi-badge db-kpi-p">🎰</span>
+              <div class="db-kpi-info"><div class="db-kpi-val">+332</div><div class="db-kpi-lbl">parties jouées</div></div>
+              <span class="db-kpi-trend">↑ 15%</span>
             </div>
           </div>
-          <div class="db-chart-labels">
-            <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
-            <span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span>
-            <span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
+          <div class="db-chart">
+            <div class="db-chart-inner">
+              <div class="db-grid">
+                <div class="db-gridline"><span>10k</span></div>
+                <div class="db-gridline"><span>7.5k</span></div>
+                <div class="db-gridline"><span>5k</span></div>
+                <div class="db-gridline"><span>2.5k</span></div>
+              </div>
+              <div class="db-bars">
+                <div class="db-bar" style="height:38%"></div>
+                <div class="db-bar" style="height:50%"></div>
+                <div class="db-bar" style="height:44%"></div>
+                <div class="db-bar" style="height:56%"></div>
+                <div class="db-bar" style="height:62%"></div>
+                <div class="db-bar" style="height:71%"></div>
+                <div class="db-bar" style="height:66%"></div>
+                <div class="db-bar" style="height:78%"></div>
+                <div class="db-bar" style="height:84%"></div>
+                <div class="db-bar" style="height:95%"></div>
+                <div class="db-bar" style="height:88%"></div>
+                <div class="db-bar" style="height:72%"></div>
+              </div>
+            </div>
+            <div class="db-chart-labels">
+              <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span>
+              <span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span>
+              <span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
+            </div>
           </div>
         </div>
-        <div class="db-kpis">
-          <div class="db-kpi"><span class="db-kpi-icon db-kpi-g">G</span><span class="db-kpi-val">2 167</span></div>
-          <div class="db-kpi"><span class="db-kpi-icon db-kpi-s">$</span><span class="db-kpi-val">+440 €</span></div>
-          <div class="db-kpi"><span class="db-kpi-icon db-kpi-p">🎰</span><span class="db-kpi-val">+332</span></div>
-        </div>
+
       </div>
     </div>
 
